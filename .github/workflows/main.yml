@@ -6,5 +6,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: install build tools
+      run: sudo apt-get install nasm
+
     - name: compile
       run: ./generate_sources.sh && make

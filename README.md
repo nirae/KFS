@@ -1,5 +1,7 @@
 # KFS - 1
 
+![Build](https://github.com/nirae/KFS-1/workflows/build/badge.svg)
+
 >  Discover the world of "Kernel Programming" and learn how to create your very own Kernel from scratch.
 
 32bit very simple kernel, just boot, print and catch keyboard input
