@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   itoa.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/17 13:58:03 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/03/17 15:50:44 by ndubouil         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "k_lib.h"
+#include "vga.h"
+
+void		itoa(int n, char *str)
+{
+	int		nb;
+	int		i;
+    int     len;
+    
+    nb = n;
+    len = intlen(n);
+    memset(str, 0, len + 1);
+    if (nb < 0)
+        nb = -nb;
+	i = len - 1;
+    if (nb == 0) {
+        str[i] = '0';
+        return;
+    }
+	while (nb != 0)
+	{
+		str[i--] = (nb % 10) + '0';
+		nb = nb / 10;
+	}
+	if (n < 0)
+		str[i] = '-';
+}

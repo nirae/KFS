@@ -1,0 +1,4 @@
+*.mk
+
+.gdb_history
+peda*
