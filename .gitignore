@@ -1,3 +1,6 @@
+*.o
+kfs
+
 *.mk
 
 .gdb_history

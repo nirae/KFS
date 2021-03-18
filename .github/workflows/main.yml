@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: install build tools
-      run: sudo apt-get install nasm grub-common
+      run: sudo apt-get install nasm grub-common mtools
 
     - name: compile
-      run: ./generate_sources.sh && make
+      run: ./generate_sources.sh && make boot && make linker

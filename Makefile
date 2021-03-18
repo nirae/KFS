@@ -6,7 +6,7 @@
 #    By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 15:17:17 by ndubouil          #+#    #+#              #
-#    Updated: 2021/03/17 17:27:24 by ndubouil         ###   ########.fr        #
+#    Updated: 2021/03/18 12:16:55 by ndubouil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ linker: $(LINKER) $(BOOT_OBJ) $(OBJS)
 	@$(LD) -m elf_i386 -T $(LINKER) -o $(NAME) $(BOOT_OBJ) $(OBJS)
 	@echo "$(CCYAN)$(NAME) binary is ready !$(CEND)"
 
-iso: kernel
+iso:
 	@echo "$(CCYAN)Creating the $(ISO_DIR) directory$(CEND)"
 	@mkdir -pv $(ISO_DIR)/boot/grub
 	@cp $(NAME) $(ISO_DIR)/boot
