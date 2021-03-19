@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:15:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/18 11:12:40 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/03/19 18:36:51 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #define VGA_COLUMNS 80
 #define VGA_BUFFER (VGA_COLUMNS * VGA_ROWS * 2)
 #define VGA_MAX (VGA_COLUMNS * VGA_ROWS)
+
+#define BLANK ' ' | (((BLACK << 4) | (WHITE & 0x0F)) << 8)
 
 #define KEYBOARD_PORT 0x60
 

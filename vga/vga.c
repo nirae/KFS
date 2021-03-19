@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:04:45 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/18 11:46:15 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/03/19 17:17:27 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,56 @@ static uint32 get_position_line(int pos)
     return pos - (pos % VGA_COLUMNS);
 }
 
-void outb(uint16 port, uint8 data)
+uint8 inb(uint16 port)
 {
-  asm volatile("outb %0, %1" : "=a"(data) : "d"(port));
+   uint8 ret;
+   asm volatile("inb %1, %0" : "=a" (ret) : "dN" (port));
+   return ret;
 }
 
-/*
- * https://wiki.osdev.org/Text_Mode_Cursor
- */
-void disable_cursor()
+void outb(uint16 port, uint8 value)
 {
-	outb(0x3D4, 0x0A);
-	outb(0x3D5, 0x20);
+    asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));
 }
+
+static uint16 get_cursor_position(void)
+{
+    uint16 pos = 0;
+    outb(0x3D4, 0x0F);
+    pos |= inb(0x3D5);
+    outb(0x3D4, 0x0E);
+    pos |= ((uint16)inb(0x3D5)) << 8;
+    return pos;
+}
+
+
+static void set_cursor_position(uint16 position)
+{
+    outb(0x3D4, 14);
+    outb(0x3D5, (position >> 8));
+    outb(0x3D4, 15);
+    outb(0x3D5, position);
+}
+
+static void set_vga_index(unsigned int new)
+{
+    vga_index = new;
+
+    if (vga_index >= VGA_MAX)
+        set_cursor_position((uint16)(VGA_MAX - VGA_COLUMNS) + (vga_index % VGA_COLUMNS));
+    else
+        set_cursor_position((uint16)vga_index);
+}
+
 
 void clear_screen(void)
 {
     int i = 0;
     while (i < VGA_BUFFER) {
-            terminal_buffer[i] = 0;
+            terminal_buffer[i] = BLANK;
             i++;
     }
-    vga_index = 0;
-    disable_cursor(20, 20);
+    set_vga_index(0);
 }
 
 static void clear_line(int line)
@@ -58,7 +85,7 @@ static void clear_line(int line)
 
     i = 0;
     while (i < VGA_COLUMNS) {
-        terminal_buffer[line + i] = 0;
+        terminal_buffer[line + i] = BLANK;
         i++;
     }
 }
@@ -66,8 +93,8 @@ static void clear_line(int line)
 void clear_previous_char(void)
 {
     if (vga_index - 1 > 0 && vga_index % VGA_COLUMNS) {
-        vga_index--;
-        terminal_buffer[vga_index] = ' ';
+        set_vga_index(vga_index - 1);
+        terminal_buffer[vga_index] = BLANK;
     }
 }
 
@@ -96,16 +123,16 @@ static void scroll_up(void)
         i += VGA_COLUMNS;
     }
     clear_line(VGA_MAX - VGA_COLUMNS);
-    vga_index = VGA_MAX - VGA_COLUMNS;
+    set_vga_index(VGA_MAX - VGA_COLUMNS);
 }
 
 static void print_newline(void)
 {
-    if (get_current_vga_line() >= VGA_ROWS) {
+    if (get_current_vga_line() >= VGA_ROWS - 1) {
         scroll_up();
     }
     else {
-        vga_index = VGA_COLUMNS * (get_current_vga_line() + 1);
+        set_vga_index(VGA_COLUMNS * (get_current_vga_line() + 1));
     }
 }
 
@@ -118,7 +145,7 @@ void kputchar(char c, unsigned char color)
     }
     else {
         terminal_buffer[vga_index] = (unsigned short)c | (unsigned short)color << 8;
-        vga_index++;
+        set_vga_index(vga_index + 1);
     }
 }
 

@@ -16,21 +16,13 @@
 - Some basic code to print some stuff on the screen
 - A basic "Hello world" kernel
 
-**Bonus ideas**
+**Bonus**
 
-- Add scroll and cursor support to your I/O interface.
-- Add colors support to your I/O interface.
-- Add helpers like printf / printk in order to print information / debug easily.
-- Handle keyboard entries and print them.
-- Handle different screens, and keyboard shortcuts to switch easily between then.
-
-**Done**
-
-- [x] Scroll
-- [x] Colors
-- [x] printf / printk
-- [x] keyboard
-
+- [x] Add scroll and cursor support to your I/O interface.
+- [x] Add colors support to your I/O interface.
+- [x] Add helpers like printf / printk in order to print information / debug easily.
+- [x] Handle keyboard entries and print them.
+- [] Handle different screens, and keyboard shortcuts to switch easily between then.
 
 # Compile
 
@@ -44,3 +36,15 @@ make
 ```
 make run
 ```
+# Resources
+
+introduction : https://www.linuxjournal.com/content/what-does-it-take-make-kernel-0
+
+bad : https://www.codeproject.com/Articles/1225196/Create-Your-Own-Kernel-In-C-2
+
+http://www.jamesmolloy.co.uk/tutorial_html
+
+http://www.osdever.net/bkerndev/Docs/intro.htm
+
+https://wiki.osdev.org/Main_Page
+
