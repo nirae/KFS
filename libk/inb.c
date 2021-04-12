@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcmp.c                                           :+:      :+:    :+:   */
+/*   inb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:11:49 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/17 14:12:05 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/04/12 19:21:02 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 19:21:23 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
+#include "kfs.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+uint8 inb(uint16 port)
 {
-	int i;
-
-	if (!s1 || !s2)
-		return (-1);
-	i = 0;
-	while (s1[i] == s2[i])
-	{
-		if (s1[i] == '\0')
-			return (0);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+  uint8 ret;
+  asm volatile("inb %1, %0" : "=a"(ret) : "dN"(port));
+  return ret;
 }

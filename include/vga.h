@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:15:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/19 18:36:51 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/12 19:26:06 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 #define VGA_MAX (VGA_COLUMNS * VGA_ROWS)
 
 #define BLANK ' ' | (((BLACK << 4) | (WHITE & 0x0F)) << 8)
-
-#define KEYBOARD_PORT 0x60
 
 enum vga_color {
     BLACK,
@@ -50,5 +48,8 @@ void kputnbr(int n, unsigned char color);
 void kputnbrnl(int n, unsigned char color);
 void printk(char *str, ...);
 void clear_previous_char(void);
+
+void move_cursor_right(int nb);
+void move_cursor_left(int nb);
 
 #endif

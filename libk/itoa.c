@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strrev.c                                           :+:      :+:    :+:   */
+/*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:19:50 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/17 14:20:05 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/17 13:58:03 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
+#include "libk.h"
+#include "vga.h"
 
-char	*strrev(char *str)
+void		itoa(int n, char *str)
 {
-	char	tmp;
+	int		nb;
 	int		i;
-	int		len;
-
-	i = 0;
-	len = 0;
-	while (str[i] != '\0')
-		i++;
-	i--;
-	while (i > len)
+    int     len;
+    
+    nb = n;
+    len = intlen(n);
+    memset(str, 0, len + 1);
+    if (nb < 0)
+        nb = -nb;
+	i = len - 1;
+    if (nb == 0) {
+        str[i] = '0';
+        return;
+    }
+	while (nb != 0)
 	{
-		tmp = str[i];
-		str[i] = str[len];
-		str[len] = tmp;
-		i--;
-		len++;
+		str[i--] = (nb % 10) + '0';
+		nb = nb / 10;
 	}
-	return (str);
+	if (n < 0)
+		str[i] = '-';
 }

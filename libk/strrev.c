@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   k_lib.h                                            :+:      :+:    :+:   */
+/*   strrev.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:07:37 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/18 10:52:44 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/17 14:19:50 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef K_LIB_H
-# define K_LIB_H
+#include "libk.h"
 
-#include "kfs.h"
+char	*strrev(char *str)
+{
+	char	tmp;
+	int		i;
+	int		len;
 
-int	            intlen(int n);
-
-void		    itoa(int n, char *str);
-int		        ft_strcmp(const char *s1, const char *s2);
-void	        strncpy(char *dst, const char *src, unsigned int len);
-unsigned int	strlen(const char *s);
-char	        *strrev(char *str);
-void	        *memset(void *b, int c, unsigned int len);
-void            sleep(int time);
-
-#endif
+	i = 0;
+	len = 0;
+	while (str[i] != '\0')
+		i++;
+	i--;
+	while (i > len)
+	{
+		tmp = str[i];
+		str[i] = str[len];
+		str[len] = tmp;
+		i--;
+		len++;
+	}
+	return (str);
+}

@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itoa.c                                             :+:      :+:    :+:   */
+/*   intlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 13:58:03 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/17 15:50:44 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/17 14:04:41 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
-#include "vga.h"
+#include "libk.h"
 
-void		itoa(int n, char *str)
+int	intlen(int n)
 {
-	int		nb;
 	int		i;
-    int     len;
-    
-    nb = n;
-    len = intlen(n);
-    memset(str, 0, len + 1);
-    if (nb < 0)
-        nb = -nb;
-	i = len - 1;
-    if (nb == 0) {
-        str[i] = '0';
-        return;
+
+	i = 1;
+    if (n < 0) {
+        n = -n;
+        i++;
     }
-	while (nb != 0)
+	while (n >= 10)
 	{
-		str[i--] = (nb % 10) + '0';
-		nb = nb / 10;
+		n = n / 10;
+		i++;
 	}
-	if (n < 0)
-		str[i] = '-';
+	return (i);
 }

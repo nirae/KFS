@@ -6,11 +6,11 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 14:40:53 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/17 14:41:29 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
+#include "libk.h"
 
 unsigned int	strlen(const char *s)
 {

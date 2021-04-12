@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strncpy.c                                          :+:      :+:    :+:   */
+/*   outb.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:09:50 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/17 14:52:29 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/04/12 19:21:49 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 19:22:06 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
+#include "kfs.h"
 
-void	strncpy(char *dst, const char *src, unsigned int len)
+void outb(uint16 port, uint8 value)
 {
-	unsigned int i;
-
-	i = 0;
-    memset(dst, 0, len);
-	while (src[i] != '\0' && i < len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
+    asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));
 }

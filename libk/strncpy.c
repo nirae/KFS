@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sleep.c                                            :+:      :+:    :+:   */
+/*   strncpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 10:52:04 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/18 11:03:36 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/17 14:09:50 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
+#include "libk.h"
 
-void sleep(int time)
+void	strncpy(char *dst, const char *src, unsigned int len)
 {
-    while (1) {
-        if (time < 0)
-            return;
-        asm volatile("nop");
-        time--;
-    }
+	unsigned int i;
+
+	i = 0;
+    memset(dst, 0, len);
+	while (src[i] != '\0' && i < len)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
 }

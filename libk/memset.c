@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kfs.h                                              :+:      :+:    :+:   */
+/*   memset.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/16 15:24:39 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 15:28:26 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/17 14:33:37 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KFS_H
-# define KFS_H
+#include "libk.h"
 
-typedef unsigned char       uint8;
-typedef unsigned short      uint16;
-typedef unsigned int        uint32;
+void	*memset(void *b, int c, unsigned int len)
+{
+	unsigned int	i;
 
-// #define sizeof(type) (void *)(&type + 1) - (void *)(&type)
-
-#define INT_MAX 0xffffffff
-#define INT_MIN ~0xffffffff
-
-#define NULL 0
-
-#endif
+	i = 0;
+	while (i < len)
+    {
+		((char *)(b))[i] = c;
+        i++;
+    }
+	return b;
+}

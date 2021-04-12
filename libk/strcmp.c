@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intlen.c                                           :+:      :+:    :+:   */
+/*   strcmp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:04:41 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/17 15:35:13 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/17 14:11:49 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "k_lib.h"
+#include "libk.h"
 
-int	intlen(int n)
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	int		i;
+	int i;
 
-	i = 1;
-    if (n < 0) {
-        n = -n;
-        i++;
-    }
-	while (n >= 10)
+	if (!s1 || !s2)
+		return (-1);
+	i = 0;
+	while (s1[i] == s2[i])
 	{
-		n = n / 10;
+		if (s1[i] == '\0')
+			return (0);
 		i++;
 	}
-	return (i);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

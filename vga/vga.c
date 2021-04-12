@@ -6,12 +6,12 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:04:45 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/19 17:17:27 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/12 19:32:31 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kfs.h"
-#include "k_lib.h"
+#include "libk.h"
 #include "vga.h"
 
 static unsigned short   *terminal_buffer = (unsigned short *)VGA_ADDRESS;
@@ -25,18 +25,6 @@ static uint32 get_current_vga_line(void)
 static uint32 get_position_line(int pos)
 {
     return pos - (pos % VGA_COLUMNS);
-}
-
-uint8 inb(uint16 port)
-{
-   uint8 ret;
-   asm volatile("inb %1, %0" : "=a" (ret) : "dN" (port));
-   return ret;
-}
-
-void outb(uint16 port, uint8 value)
-{
-    asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));
 }
 
 static uint16 get_cursor_position(void)
@@ -68,13 +56,38 @@ static void set_vga_index(unsigned int new)
         set_cursor_position((uint16)vga_index);
 }
 
+static void move_right(void)
+{
+    unsigned int last;
+
+    last = VGA_MAX;
+    while (last > vga_index) {
+        terminal_buffer[last] = BLANK;
+        terminal_buffer[last] = terminal_buffer[last - 1];
+        last--;
+    }
+
+}
+
+static void move_left(void)
+{
+    unsigned int cur;
+
+    cur = vga_index;
+    while (cur < VGA_MAX) {
+        terminal_buffer[cur] = BLANK;
+        terminal_buffer[cur] = terminal_buffer[cur + 1];
+        cur++;
+    }
+
+}
 
 void clear_screen(void)
 {
     int i = 0;
     while (i < VGA_BUFFER) {
-            terminal_buffer[i] = BLANK;
-            i++;
+        terminal_buffer[i] = BLANK;
+        i++;
     }
     set_vga_index(0);
 }
@@ -92,9 +105,10 @@ static void clear_line(int line)
 
 void clear_previous_char(void)
 {
-    if (vga_index - 1 > 0 && vga_index % VGA_COLUMNS) {
+    if (vga_index - 1 > 0) {
         set_vga_index(vga_index - 1);
         terminal_buffer[vga_index] = BLANK;
+        move_left();
     }
 }
 
@@ -136,6 +150,16 @@ static void print_newline(void)
     }
 }
 
+void move_cursor_right(int nb)
+{
+    set_vga_index(vga_index + nb);
+}
+
+void move_cursor_left(int nb)
+{
+    set_vga_index(vga_index - nb);
+}
+
 void kputchar(char c, unsigned char color)
 {
     if (vga_index + 1 > VGA_MAX)
@@ -144,6 +168,7 @@ void kputchar(char c, unsigned char color)
         print_newline();
     }
     else {
+        move_right();
         terminal_buffer[vga_index] = (unsigned short)c | (unsigned short)color << 8;
         set_vga_index(vga_index + 1);
     }
