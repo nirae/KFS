@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcmp.c                                           :+:      :+:    :+:   */
+/*   cursor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:11:49 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/13 16:12:31 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/04/13 12:01:43 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/13 12:13:04 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "kfs.h"
 #include "libk.h"
 
-int		strcmp(const char *s1, const char *s2)
+uint16 get_cursor_position(void)
 {
-	int i;
+    uint16 pos = 0;
+    outb(0x3D4, 0x0F);
+    pos |= inb(0x3D5);
+    outb(0x3D4, 0x0E);
+    pos |= ((uint16)inb(0x3D5)) << 8;
+    return pos;
+}
 
-	if (!s1 || !s2)
-		return (-1);
-	i = 0;
-	while (s1[i] == s2[i])
-	{
-		if (s1[i] == '\0')
-			return (0);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+
+void set_cursor_position(uint16 position)
+{
+    outb(0x3D4, 14);
+    outb(0x3D5, (position >> 8));
+    outb(0x3D4, 15);
+    outb(0x3D5, position);
 }

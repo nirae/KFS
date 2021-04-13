@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcmp.c                                           :+:      :+:    :+:   */
+/*   useless_shell.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 14:11:49 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/13 16:12:31 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/03/16 16:15:01 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/13 10:30:04 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libk.h"
+#ifndef IO_H
+# define IO_H
 
-int		strcmp(const char *s1, const char *s2)
-{
-	int i;
+void useless_shell(void);
 
-	if (!s1 || !s2)
-		return (-1);
-	i = 0;
-	while (s1[i] == s2[i])
-	{
-		if (s1[i] == '\0')
-			return (0);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
+#endif

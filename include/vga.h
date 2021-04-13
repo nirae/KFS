@@ -6,12 +6,14 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:15:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 19:26:06 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/13 12:15:13 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VGA_H
 # define VGA_H
+
+#include "kfs.h"
 
 #define VGA_ADDRESS 0xB8000
 
@@ -21,6 +23,9 @@
 #define VGA_MAX (VGA_COLUMNS * VGA_ROWS)
 
 #define BLANK ' ' | (((BLACK << 4) | (WHITE & 0x0F)) << 8)
+
+extern unsigned short   *terminal_buffer;
+extern unsigned int     vga_index;
 
 enum vga_color {
     BLACK,
@@ -42,13 +47,18 @@ enum vga_color {
 };
 
 void clear_screen(void);
-void kputstr(char *str, unsigned char color);
-void kputchar(char c, unsigned char color);
-void kputnbr(int n, unsigned char color);
-void kputnbrnl(int n, unsigned char color);
-void printk(char *str, ...);
 void clear_previous_char(void);
-
+void print_newline(void);
+void scroll_up(void);
+void copy_line(int dst, int src);
+void clear_line(int line);
+void move_left(void);
+void move_right(void);
+void set_vga_index(unsigned int new);
+uint32 get_position_line(int pos);
+uint32 get_current_vga_line(void);
+uint16 get_cursor_position(void);
+void set_cursor_position(uint16 position);
 void move_cursor_right(int nb);
 void move_cursor_left(int nb);
 

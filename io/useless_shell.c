@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 19:28:30 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/13 16:16:06 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ void get_input(char *buffer, int buffer_limit)
 
     while (1) {
         key = get_pressed_char();
+        /* If the key is a control key */
         if (key <= 0) {
+            /* Left Arrow */
             if (key == LEFT_ARROW_KEY) {
                 if (i > 0) {
                     move_cursor_left(1);
                     i--;
                 }
             }
+            /* Right Arrow */
             else if (key == RIGHT_ARROW_KEY) {
                 if (i < strlen(buffer)) {
                     move_cursor_right(1);
@@ -64,28 +67,30 @@ void get_input(char *buffer, int buffer_limit)
             }
             continue;
         }
-
+        /* Enter key */
         if (key == '\n') {
             kputchar(key, WHITE);
             return;
         }
-
+        /* If CTRL is pressed */
         if (GET_KEY_STATUS(keystatus, CTRL_BIT)) {
+            /* CTRL + L */
             if (key == 'l') {
                 memset(buffer, 0, 256);
                 clear_screen();
                 return;
             }
         }
-
+        /* Return key */
         if (key == '\b') {
-            clear_previous_char();
-            if (strlen(buffer) > 0) {
+            if (strlen(buffer) > 0 && i > 0) {
+                clear_previous_char();
                 buffer[i - 1] = 0;
                 i--;
+                move_left_buffer(buffer, buffer_limit, i);
             }
-            move_left_buffer(buffer, buffer_limit, i);
         }
+        /* All other keys */
         else {
             kputchar(key, WHITE);
             move_right_buffer(buffer, buffer_limit, i);
@@ -102,12 +107,16 @@ void useless_shell(void)
 {
     char    buffer[256];
 
-    memset(buffer, 0, 256);
     while (666) {
+        memset(buffer, 0, 256);
         get_input(buffer, 256);
         if (strlen(buffer) > 0) {
-            printk("%s\n", buffer);
-            memset(buffer, 0, 256);
+            if (strcmp(buffer, "clear") == 0) {
+                clear_screen();
+            }
+            else {
+                printk("%s\n", buffer);
+            }
         }
     }
 }

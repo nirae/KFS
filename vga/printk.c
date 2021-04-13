@@ -6,11 +6,11 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:57:55 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/03/18 11:12:36 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/13 12:16:28 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vga.h"
+#include "kput.h"
 
 void printk(char *str, ...)
 {

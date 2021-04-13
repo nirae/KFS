@@ -6,16 +6,22 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:25:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 19:28:24 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/13 10:15:19 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ *  Keystatus:
+ *      Contain the state of the pressed/lock keys
+ */
 char keystatus = 0;
 
 /*
  * https://www.win.tue.nl/~aeb/linux/kbd/scancodes-1.html#ss1.1
+ * http://www.osdever.net/bkerndev/Docs/keyboard.htm
+ * https://wiki.osdev.org/PS2_Keyboard
  */
 static char qwerty_kb_table[128] = {
 	0,
@@ -76,7 +82,7 @@ static char qwerty_kb_table[128] = {
 	'*',
 	0,              /* alt */
 	' ',            /* space */
-	0,              /* caps lock */
+	CAPSLOCK_KEY,   /* caps lock */
 	0,              /* F1 */
 	0,              /* F2 */
 	0,              /* F3 */
@@ -120,7 +126,7 @@ static char qwerty_shift_kb_table[] = {
 };
 
 /*
- * Return the keycode
+ * Return the keycode and update the keystatus
  */
 uint16 keyboard_handler(void)
 {
@@ -131,11 +137,13 @@ uint16 keyboard_handler(void)
 
         /* Release */
         if (IS_RELEASED(keycode)) {
-            /* Shift case */
-            if (qwerty_kb_table[GET_KEYCODE_FROM_RELEASED(keycode)] == SHIFT_KEY)
-                UNSET_KEY_STATUS(keystatus, SHIFT_BIT);
-            else if (qwerty_kb_table[GET_KEYCODE_FROM_RELEASED(keycode)] == CTRL_KEY)
-                UNSET_KEY_STATUS(keystatus, CTRL_BIT);
+            /* Special keys cases */
+            switch (qwerty_kb_table[GET_KEYCODE_FROM_RELEASED(keycode)]) {
+                case SHIFT_KEY:
+                    UNSET_KEY_STATUS(keystatus, SHIFT_BIT);
+                case CTRL_KEY:
+                    UNSET_KEY_STATUS(keystatus, CTRL_BIT);
+            }
         }
         /* Pressed */
         else {
@@ -143,11 +151,21 @@ uint16 keyboard_handler(void)
             outb(KEYBOARD_DATA_PORT, 0);
             if (keycode < 0 || keycode > 128)
                 continue;
-            /* Shift case */
-            if (qwerty_kb_table[keycode] == SHIFT_KEY)
-                SET_KEY_STATUS(keystatus, SHIFT_BIT);
-            else if (qwerty_kb_table[keycode] == CTRL_KEY)
-                SET_KEY_STATUS(keystatus, CTRL_BIT);
+            /* Special keys cases */
+            switch (qwerty_kb_table[keycode]) {
+                case SHIFT_KEY:
+                    SET_KEY_STATUS(keystatus, SHIFT_BIT);
+                    break;
+                case CTRL_KEY:
+                    SET_KEY_STATUS(keystatus, CTRL_BIT);
+                    break;
+                case CAPSLOCK_KEY:
+                    if (GET_KEY_STATUS(keystatus, CAPSLOCK_BIT))
+                        UNSET_KEY_STATUS(keystatus, CAPSLOCK_BIT);
+                    else
+                        SET_KEY_STATUS(keystatus, CAPSLOCK_BIT);
+                    break;
+            }
             break;
         }
     }
@@ -159,7 +177,8 @@ char get_pressed_char(void)
     uint16      keycode = 0;
 
     keycode = keyboard_handler();
-    if (GET_KEY_STATUS(keystatus, SHIFT_BIT)) {
+    if (GET_KEY_STATUS(keystatus, SHIFT_BIT) \
+            || GET_KEY_STATUS(keystatus, CAPSLOCK_BIT)) {
         return qwerty_shift_kb_table[keycode];
     }
     return qwerty_kb_table[keycode];

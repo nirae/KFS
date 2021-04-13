@@ -16,9 +16,8 @@
 #include "kfs.h"
 
 int	            intlen(int n);
-
 void		    itoa(int n, char *str);
-int		        ft_strcmp(const char *s1, const char *s2);
+int		        strcmp(const char *s1, const char *s2);
 void	        strncpy(char *dst, const char *src, unsigned int len);
 unsigned int	strlen(const char *s);
 char	        *strrev(char *str);

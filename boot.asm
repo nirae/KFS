@@ -12,22 +12,22 @@
 
 bits 32
 
-section .multiboot               ;according to multiboot spec
-        dd 0x1BADB002            ;set magic number for bootloader
-        dd 0x0                   ;set flags
-        dd - (0x1BADB002 + 0x0)  ;set checksum
+section .multiboot
+        dd 0x1BADB002               ; Magic number for bootloader
+        dd 0x0                      ; Flags
+        dd - (0x1BADB002 + 0x0)     ; Checksum
 
 section .text
 global start
-extern main                      ; the C
+extern main                         ; Main
 
 start:
-        cli                      ;block interrupts
-        mov esp, stack_space     ;set stack pointer
-        call main
-        hlt                      ;halt the CPU
+        cli                         ; Clear interrupts
+        mov esp, stack_space        ; Stack pointer
+        call main                   ; Main call
+        hlt                         ; Halt CPU
 
 section .bss
-resb 8192                        ; stack size : 8KB
-; resb 4096                        ; stack size : 8KB
+; resb 8192                         ; stack size : 8KB
+resb 4096                           ; stack size : 4KB
 stack_space:
