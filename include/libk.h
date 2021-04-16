@@ -22,6 +22,7 @@ void	        strncpy(char *dst, const char *src, unsigned int len);
 unsigned int	strlen(const char *s);
 char	        *strrev(char *str);
 void	        *memset(void *b, int c, unsigned int len);
+void            hex_to_str(uint32 addr, char *result, int size);
 void            sleep(int time);
 
 uint8           inb(uint16 port);

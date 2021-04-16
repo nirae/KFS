@@ -6,11 +6,12 @@
 #    By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 15:17:17 by ndubouil          #+#    #+#              #
-#    Updated: 2021/03/18 12:16:55 by ndubouil         ###   ########.fr        #
+#    Updated: 2021/04/15 14:28:06 by ndubouil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 include sources.mk
+include sources_asm.mk
 include headers.mk
 
 CCYAN=\033[36m
@@ -36,6 +37,7 @@ BOOT_OBJ	=	boot.o
 LINKER		=	linker.ld
 
 OBJS		=	$(patsubst %.c,%.o,$(SRCS))
+OBJS		+=	$(patsubst %.asm,%.o,$(SRCS_ASM))
 
 # Binary name
 
@@ -53,6 +55,10 @@ boot: boot.asm
 %.o: %.c $(HFILES)
 	@echo "$(CCYAN)Creating $@ ...$(CEND)"
 	@$(CC) $(CFLAGS) -I$(H) -c $< -o $@
+
+%.o: %.asm
+	@echo "$(CCYAN)Creating $@ ...$(CEND)"
+	@$(NASM) -f elf32 -g -F dwarf $< -o $@
 
 linker: $(LINKER) $(BOOT_OBJ) $(OBJS)
 	@echo "$(CCYAN)Linking ...$(CEND)"

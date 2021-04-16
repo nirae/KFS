@@ -6,13 +6,14 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/13 16:16:06 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/04/16 17:58:02 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vga.h"
 #include "libk.h"
 #include "keyboard.h"
+#include "debug.h"
 
 /*
  *  shift the buffer to the right
@@ -103,11 +104,52 @@ void get_input(char *buffer, int buffer_limit)
     }
 }
 
+void strsplit(char *str, int limit, int max, ...)
+{
+    int *args;
+    char *input;
+    char *buffer;
+    int lim = 0;
+    int i;
+    int y;
+
+    args = (int *)(&str);
+    input = (char *)(*args++);
+    lim = *args++;
+    max = *args++;
+    i = 0;
+    /* While the tokens limit */
+    while (lim) {
+        y = 0;
+        while (input[i]) {
+            if (y > max) {
+                return;
+            }
+            if (input[i] != ' ') {
+                (*((char **)args))[y] = input[i];
+                y++;
+            }
+            else {
+                (*((char **)args))[y] = '\0';
+                while (input[i] == ' ')
+                    i++;
+                break;
+            }
+            i++;
+        }
+        args++;
+        lim--;
+    }
+}
+
 void useless_shell(void)
 {
+    int     esp;
     char    buffer[256];
 
-    while (666) {
+    while (666) {    
+        GET_ESP(esp);
+        kdebug_dump(esp, 256);
         memset(buffer, 0, 256);
         get_input(buffer, 256);
         if (strlen(buffer) > 0) {
@@ -115,7 +157,12 @@ void useless_shell(void)
                 clear_screen();
             }
             else {
-                printk("%s\n", buffer);
+                char cmd[32];
+                char opt1[32];
+                char opt2[32];
+                strsplit(buffer, 3, 32, cmd, opt1, opt2);
+                printk("%s, %s, %s\n", cmd, opt1, opt2);
+                // printk("%s\n", buffer);
             }
         }
     }

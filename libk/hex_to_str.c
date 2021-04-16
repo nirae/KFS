@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kput.h                                             :+:      :+:    :+:   */
+/*   hex_to_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/13 12:05:13 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/16 17:44:16 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/04/16 12:08:29 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/04/16 12:10:00 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KPUT_H
-# define KPUT_H
-
-#include "kfs.h"
 #include "libk.h"
-#include "vga.h"
 
-void kputstr(char *str, unsigned char color);
-void kputchar(char c, unsigned char color);
-void kputnbr(int n, unsigned char color);
-void kputnbrnl(int n, unsigned char color);
-void printk(char *str, ...);
+void hex_to_str(uint32 addr, char *result, int size)
+{
+    int		len;
+    char    base_str[16] = "0123456789abcdef";
 
-#endif
+	len = size - 1;
+    memset(result, '0', size);
+    result[size - 1] = 0;
+	while (addr != 0)
+	{
+		result[--len] = base_str[addr % 16];
+		addr = addr / 16;
+	}
+}

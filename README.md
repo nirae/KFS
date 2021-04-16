@@ -48,3 +48,4 @@ http://www.osdever.net/bkerndev/Docs/intro.htm
 
 https://wiki.osdev.org/Main_Page
 
+https://www.intel.com/content/www/us/en/architecture-and-technology/64-ia-32-architectures-software-developer-vol-3a-part-1-manual.html
