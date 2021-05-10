@@ -1,0 +1,17 @@
+SRCS+=./vga/kput.c
+SRCS+=./vga/printk.c
+SRCS+=./vga/cursor.c
+SRCS+=./vga/vga.c
+SRCS+=./io/useless_shell.c
+SRCS+=./io/keyboard.c
+SRCS+=./kfs.c
+SRCS+=./libk/inb.c
+SRCS+=./libk/strncpy.c
+SRCS+=./libk/itoa.c
+SRCS+=./libk/sleep.c
+SRCS+=./libk/strlen.c
+SRCS+=./libk/strrev.c
+SRCS+=./libk/strcmp.c
+SRCS+=./libk/intlen.c
+SRCS+=./libk/memset.c
+SRCS+=./libk/outb.c

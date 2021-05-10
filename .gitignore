@@ -2,7 +2,5 @@
 kfs*
 iso
 
-*.mk
-
 .gdb_history
 peda*
