@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:24:39 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 15:28:26 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/10 15:39:54 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 typedef unsigned char       uint8;
 typedef unsigned short      uint16;
 typedef unsigned int        uint32;
-
-// #define sizeof(type) (void *)(&type + 1) - (void *)(&type)
 
 #define INT_MAX 0xffffffff
 #define INT_MIN ~0xffffffff

@@ -6,7 +6,7 @@
 #    By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 15:17:17 by ndubouil          #+#    #+#              #
-#    Updated: 2021/03/18 12:16:55 by ndubouil         ###   ########.fr        #
+#    Updated: 2021/05/10 15:57:05 by ndubouil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ iso:
 	@cp $(GRUB_CFG) $(ISO_DIR)/boot/grub
 	@echo "$(CCYAN)Creating the $(ISO) file$(CEND)"
 	@grub-file --is-x86-multiboot $(ISO_DIR)/boot/$(NAME)
-	@grub-mkrescue -o $(ISO) $(ISO_DIR)
+	@grub-mkrescue -o $(ISO) --compress=xz $(ISO_DIR)
 
 clean:
 	@echo "$(CCYAN)Cleaning Objs ...$(CEND)"
