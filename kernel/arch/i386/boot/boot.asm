@@ -48,11 +48,14 @@ extern main                         ; Main
 
 start:
     cli                         ; Clear interrupts
+    sti
     xor ebp, ebp
     mov esp, stack_space        ; Stack pointer
     push ebx
     call main                   ; Main call
-    jmp $
+    jmp .1
+.1:
+    hlt
     ; hlt                         ; Halt CPU
 
 section .bss

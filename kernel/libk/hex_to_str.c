@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itoa.c                                             :+:      :+:    :+:   */
+/*   hex_to_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 13:58:03 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/04/16 12:08:29 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/05/14 10:39:15 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libk.h"
-#include "vga.h"
 
-void		itoa(int n, char *str)
+void hex_to_str(unsigned int addr, char *result, int size)
 {
-	int		nb;
-	int		i;
-    int     len;
-    
-    nb = n;
-    len = intlen(n);
-    memset(str, 0, len + 1);
-    if (nb < 0)
-        nb = -nb;
-	i = len - 1;
-    if (nb == 0) {
-        str[i] = '0';
-        return;
-    }
-	while (nb != 0)
+    int		len;
+    char    base_str[16] = "0123456789abcdef";
+
+	len = size - 1;
+    memset(result, '0', size);
+    result[size - 1] = 0;
+	while (addr != 0)
 	{
-		str[i--] = (nb % 10) + '0';
-		nb = nb / 10;
+		result[--len] = base_str[addr % 16];
+		addr = addr / 16;
 	}
-	if (n < 0)
-		str[i] = '-';
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   useless_shell.h                                    :+:      :+:    :+:   */
+/*   outw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/16 16:15:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/13 10:30:04 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/04/12 19:21:49 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/05/11 11:39:01 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IO_H
-# define IO_H
+#include "kfs.h"
 
-void useless_shell(void);
-
-#endif
+void outw(uint16 port, uint16 value)
+{
+    asm volatile ("outw %1, %0" : : "dN" (port), "a" (value));
+}

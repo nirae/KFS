@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 11:31:31 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/16 16:06:00 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/12 19:04:09 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct  __attribute__((packed)) gdt_ptr
    uint16 limit;               // The upper 16 bits of all selector limits.
    uint32 base;                // The address of the first gdt_entry_t struct.
 } t_gdt_ptr;
+
+extern void gdt_flush(u32int);
 
 void init_gdt();
 

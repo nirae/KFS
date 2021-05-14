@@ -6,11 +6,13 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 11:37:39 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/16 16:07:00 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/11 16:12:52 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gdt.h"
+#include "kput.h"
+#include "libk.h"
 
 t_gdt_entry     gdt_entries[GDT_ENTRIES];
 t_gdt_ptr       *gdt_ptr = (t_gdt_ptr *)GDT_ADDRESS;

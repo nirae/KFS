@@ -19,7 +19,7 @@ then
     rm sources_asm.mk
 fi
 
-for file in `find ./gdt -name '*.asm'`
+for file in `find  ./kernel/arch/i386 -path './kernel/arch/i386/boot' -prune -false -o -name '*.asm'`
 do
 	printf "SRCS_ASM+=%s\n" $file >> sources_asm.mk
 done
@@ -32,7 +32,7 @@ then
     rm headers.mk
 fi
 
-for file in `find ./include -name '*.h'`
+for file in `find ./kernel/include -name '*.h'`
 do
 	printf "HFILES+=%s\n" $file >> headers.mk
 done

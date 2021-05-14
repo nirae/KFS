@@ -13,8 +13,6 @@
 #ifndef LIBK_H
 # define LIBK_H
 
-#include "kfs.h"
-
 int	            intlen(int n);
 void		    itoa(int n, char *str);
 int		        strcmp(const char *s1, const char *s2);
@@ -22,10 +20,11 @@ void	        strncpy(char *dst, const char *src, unsigned int len);
 unsigned int	strlen(const char *s);
 char	        *strrev(char *str);
 void	        *memset(void *b, int c, unsigned int len);
-void            hex_to_str(uint32 addr, char *result, int size);
+void            hex_to_str(unsigned int addr, char *result, int size);
 void            sleep(int time);
 
-uint8           inb(uint16 port);
-void            outb(uint16 port, uint8 value);
+// uint8           inb(uint16 port);
+// void            outb(uint16 port, uint8 value);
+// void            outw(uint16 port, uint16 value);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/16 17:58:02 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/13 22:58:12 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libk.h"
 #include "keyboard.h"
 #include "debug.h"
+#include "timer.h"
 
 /*
  *  shift the buffer to the right
@@ -120,6 +121,7 @@ void strsplit(char *str, int limit, int max, ...)
     i = 0;
     /* While the tokens limit */
     while (lim) {
+        memset(*args, 0, max);
         y = 0;
         while (input[i]) {
             if (y > max) {
@@ -130,7 +132,6 @@ void strsplit(char *str, int limit, int max, ...)
                 y++;
             }
             else {
-                (*((char **)args))[y] = '\0';
                 while (input[i] == ' ')
                     i++;
                 break;
@@ -142,27 +143,95 @@ void strsplit(char *str, int limit, int max, ...)
     }
 }
 
+int get_next_token(char *buffer, char *result, int size)
+{
+    int i = 0;
+    int y = 0;
+
+    memset(result, 0, size);
+    while (buffer[i] == ' ') {
+        i++;
+    }
+    while (buffer[i]) {
+        if (buffer[i] == ' ' || buffer[i] == '\t') {
+            return i;
+        }
+        result[y] = buffer[i];
+        y++;
+        if (y >= size) {
+            return i;
+        }
+        i++;
+    }
+}
+
+/*
+ *  https://wiki.osdev.org/Reboot
+ */
+void reboot()
+{
+    uint8 good = 0x02;
+
+    asm volatile ("cli");
+    while (good & 0x02)
+        good = inb(KEYBOARD_CTRL_PORT);
+    
+    outb(KEYBOARD_CTRL_PORT, 0xFE);
+    asm volatile ("hlt");
+}
+
+extern ticks;
+extern second;
+extern hour;
+extern minute;
+extern day;
+extern month;
+extern year;
+
 void useless_shell(void)
 {
     int     esp;
+    int     ebp;
     char    buffer[256];
+    char    cmd[32];
 
     while (666) {    
-        GET_ESP(esp);
-        kdebug_dump(esp, 256);
         memset(buffer, 0, 256);
         get_input(buffer, 256);
         if (strlen(buffer) > 0) {
             if (strcmp(buffer, "clear") == 0) {
                 clear_screen();
             }
+            else if (strcmp(buffer, "reboot") == 0) {
+                reboot();
+            }
+            else if (strcmp(buffer, "shutdown") == 0) {
+                // shutdown();
+                /*
+                 *  https://wiki.osdev.org/Shutdown
+                 */
+                outw(0x604, 0x2000);
+            }
+            else if (strcmp(buffer, "stack") == 0) {
+                GET_ESP(esp);
+                GET_EBP(ebp);
+                kdebug_dump(esp, ebp - esp);
+                // kdebug_dump(esp, 256);
+            }
+            else if (strcmp(buffer, "ticks") == 0) {
+                printk("%d\n", ticks);
+            }
+            else if (strcmp(buffer, "rtc") == 0) {
+                read_rtc();
+                printk("%d/%d/%d %d:%d:%d\n", day, month, year, hour, minute, second);
+            }
             else {
-                char cmd[32];
-                char opt1[32];
-                char opt2[32];
-                strsplit(buffer, 3, 32, cmd, opt1, opt2);
-                printk("%s, %s, %s\n", cmd, opt1, opt2);
-                // printk("%s\n", buffer);
+                // char cmd[32];
+                // char opt1[32];
+                // char opt2[32];
+                // strsplit(buffer, 3, 32, cmd, opt1, opt2);
+                // printk("%s, %s, %s\n", cmd, opt1, opt2);
+                printk("%s\n", buffer);
             }
         }
     }
