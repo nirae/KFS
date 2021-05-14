@@ -1,5 +1,6 @@
 *.o
-kfs*
+kfs
+*.iso
 iso
 
 .gdb_history
