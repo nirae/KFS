@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io.h                                               :+:      :+:    :+:   */
+/*   reboot.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 12:08:39 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 12:23:45 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/05/14 12:22:33 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/05/14 12:26:00 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IO_H
-# define IO_H
+#include "io.h"
+#include "keyboard.h"
 
-#include "kfs.h"
+/*
+ *  https://wiki.osdev.org/Reboot
+ *  Use the 8042 keyboard controller to pulse the CPU's RESET pin 
+ *  TODO: ACPI
+ */
+void reboot(void)
+{
+    uint8 good = 0x02;
 
-uint8   inb(uint16 port);
-void    outb(uint16 port, uint8 value);
-void    outw(uint16 port, uint16 value);
-
-void    qemu_shutdown(void);
-void    reboot(void);
-
-#endif
+    asm volatile ("cli");
+    while (good & 0x02)
+        good = inb(KEYBOARD_CTRL_PORT);
+    
+    outb(KEYBOARD_CTRL_PORT, 0xFE);
+    asm volatile ("hlt");
+}

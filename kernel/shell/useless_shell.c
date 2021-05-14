@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 12:17:46 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:23:22 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,21 +161,6 @@ int get_next_token(char *buffer, char *result, int size)
     }
 }
 
-/*
- *  https://wiki.osdev.org/Reboot
- */
-void reboot()
-{
-    uint8 good = 0x02;
-
-    asm volatile ("cli");
-    while (good & 0x02)
-        good = inb(KEYBOARD_CTRL_PORT);
-    
-    outb(KEYBOARD_CTRL_PORT, 0xFE);
-    asm volatile ("hlt");
-}
-
 extern ticks;
 extern second;
 extern hour;
@@ -202,11 +187,7 @@ void useless_shell(void)
                 reboot();
             }
             else if (strcmp(buffer, "shutdown") == 0) {
-                // shutdown();
-                /*
-                 *  https://wiki.osdev.org/Shutdown
-                 */
-                outw(0x604, 0x2000);
+                qemu_shutdown();
             }
             else if (strcmp(buffer, "stack") == 0) {
                 GET_ESP(esp);
