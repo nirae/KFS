@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "multiboot.h": "c",
+        "type_traits": "c"
+    }
+}

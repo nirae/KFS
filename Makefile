@@ -6,11 +6,12 @@
 #    By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 15:17:17 by ndubouil          #+#    #+#              #
-#    Updated: 2021/05/10 15:57:05 by ndubouil         ###   ########.fr        #
+#    Updated: 2021/05/14 17:08:46 by ndubouil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 include sources.mk
+include sources_asm.mk
 include headers.mk
 
 CCYAN=\033[36m
@@ -23,36 +24,42 @@ NASM = /usr/bin/nasm
 
 # Directories
 
-H			=	include
+H			=	kernel/include
 ISO_DIR		=	iso
 
 # Files
 
 GRUB_CFG	=	grub/grub.cfg
 
-BOOT		=	boot.asm
-BOOT_OBJ	=	boot.o
+BOOT		=	kernel/arch/i386/boot/boot.asm
+BOOT_OBJ	=	kernel/arch/i386/boot/boot.o
 
-LINKER		=	linker.ld
+LINKER		=	kernel/arch/i386/linker.ld
 
 OBJS		=	$(patsubst %.c,%.o,$(SRCS))
+OBJS		+=	$(patsubst %.asm,%.o,$(SRCS_ASM))
 
 # Binary name
 
 NAME		=	kfs
 ISO			=	$(NAME).iso
 
-.PHONY: all boot kernel linker iso clean run
+.PHONY: all libk boot kernel linker iso clean run
 
-all: boot $(OBJS) linker iso
+all: boot $(OBJS) linker iso $(LIBK)
 	@true
 
-boot: boot.asm
+boot: $(BOOT)
+	@echo "$(CCYAN)Creating $(BOOT_OBJ) ...$(CEND)"
 	@$(NASM) -f elf32 $(BOOT) -o $(BOOT_OBJ)
 
 %.o: %.c $(HFILES)
 	@echo "$(CCYAN)Creating $@ ...$(CEND)"
 	@$(CC) $(CFLAGS) -I$(H) -c $< -o $@
+
+%.o: %.asm
+	@echo "$(CCYAN)Creating $@ ...$(CEND)"
+	@$(NASM) -f elf32 -g -F dwarf $< -o $@
 
 linker: $(LINKER) $(BOOT_OBJ) $(OBJS)
 	@echo "$(CCYAN)Linking ...$(CEND)"
@@ -77,6 +84,9 @@ fclean: clean
 	@rm -rf $(NAME) $(ISO)
 
 re: fclean all
+
+drun:
+	qemu-system-i386 -no-reboot -no-shutdown -s -cdrom $(ISO)
 
 run:
 	qemu-system-i386 -s -cdrom $(ISO)
