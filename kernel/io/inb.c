@@ -6,11 +6,11 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:21:02 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 19:21:23 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:10:02 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "kfs.h"
+#include "io.h"
 
 uint8 inb(uint16 port)
 {

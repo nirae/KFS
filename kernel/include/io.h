@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   useless_shell.h                                    :+:      :+:    :+:   */
+/*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/16 16:15:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 12:13:20 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/05/14 12:08:39 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/05/14 12:09:47 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
+#ifndef IO_H
+# define IO_H
 
-#include "vga.h"
-#include "libk.h"
-#include "keyboard.h"
-#include "debug.h"
-#include "timer.h"
-#include "io.h"
+#include "kfs.h"
 
-void useless_shell(void);
+uint8   inb(uint16 port);
+void    outb(uint16 port, uint8 value);
+void    outw(uint16 port, uint16 value);
 
 #endif

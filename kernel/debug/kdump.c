@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kdebug_dump.c                                      :+:      :+:    :+:   */
+/*   kdump.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 15:04:49 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 11:07:31 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:17:32 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 
-void kdebug_dump(uint32 addr, int limit)
+void kdump(uint32 addr, int limit)
 {
     char *c = (char *)addr;
     char str_addr[9];

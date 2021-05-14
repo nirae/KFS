@@ -6,11 +6,11 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:21:49 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/11 11:39:01 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:09:55 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "kfs.h"
+#include "io.h"
 
 void outw(uint16 port, uint16 value)
 {

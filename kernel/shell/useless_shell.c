@@ -6,15 +6,11 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/13 22:58:12 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:17:46 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vga.h"
-#include "libk.h"
-#include "keyboard.h"
-#include "debug.h"
-#include "timer.h"
+#include "useless_shell.h"
 
 /*
  *  shift the buffer to the right
@@ -215,8 +211,8 @@ void useless_shell(void)
             else if (strcmp(buffer, "stack") == 0) {
                 GET_ESP(esp);
                 GET_EBP(ebp);
-                kdebug_dump(esp, ebp - esp);
-                // kdebug_dump(esp, 256);
+                kdump(esp, ebp - esp);
+                // kdump(esp, 256);
             }
             else if (strcmp(buffer, "ticks") == 0) {
                 printk("%d\n", ticks);

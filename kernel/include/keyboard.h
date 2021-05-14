@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:24:43 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/13 18:18:47 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:12:11 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define KEYBOARD_H
 
 #include "kfs.h"
+#include "io.h"
 
 extern char keystatus;
 

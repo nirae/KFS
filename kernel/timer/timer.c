@@ -6,13 +6,14 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 12:24:20 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 11:53:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:15:22 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "timer.h"
 #include "interrupts.h"
 #include "kput.h"
+#include "io.h"
 
 uint32 ticks = 0;
 

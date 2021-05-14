@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:54:43 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 12:01:23 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:15:00 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ISR_H
 
 #include "kfs.h"
+#include "io.h"
 
 #define IRQ0    32
 #define IRQ1    33
