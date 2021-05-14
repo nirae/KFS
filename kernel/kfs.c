@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:17:11 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:55:19 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void    kfs(void)
     kputchar('\n', WHITE);
 }
 
-void    main(uint32 *magic)
+void    main(void)
 {
     uint32 esp;
     uint32 ebp;
