@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:57:55 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/11 17:27:17 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 16:24:30 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,21 @@ void printk(char *str, ...)
     char    *format;
     int     i;
     char    tmp_addr[9];
+    uint8   zero_padding;
 
     args = (int *)(&str);
     format = (char *)(*args++);
     i = 0;
     while (format[i]) {
+        zero_padding = 0;
         if (format[i] == '%') {
             i++;
+            /* padding with zeros - max 9 */
+            if (format[i] == '0') {
+                i++;
+                zero_padding = format[i] - '0';
+                i++;
+            }
             if (format[i] == 'c') {
                 kputchar(*args++, WHITE);
             }
@@ -43,6 +51,12 @@ void printk(char *str, ...)
                 kputstr(tmp_addr, WHITE);
             }
             else if (format[i] == 'd') {
+                if (zero_padding > 0) {
+                    while (zero_padding - intlen(*args)) {
+                        kputchar('0', WHITE);
+                        zero_padding--;
+                    }
+                }
                 kputnbr(*args++, WHITE);
             }
             else {

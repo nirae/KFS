@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 12:23:22 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 16:17:22 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,14 +161,6 @@ int get_next_token(char *buffer, char *result, int size)
     }
 }
 
-extern ticks;
-extern second;
-extern hour;
-extern minute;
-extern day;
-extern month;
-extern year;
-
 void useless_shell(void)
 {
     int     esp;
@@ -176,7 +168,9 @@ void useless_shell(void)
     char    buffer[256];
     char    cmd[32];
 
-    while (666) {    
+    while (666) {
+        // kputchar(254, WHITE);
+        printk("%c> ", 3);
         memset(buffer, 0, 256);
         get_input(buffer, 256);
         if (strlen(buffer) > 0) {
@@ -193,22 +187,17 @@ void useless_shell(void)
                 GET_ESP(esp);
                 GET_EBP(ebp);
                 kdump(esp, ebp - esp);
-                // kdump(esp, 256);
             }
             else if (strcmp(buffer, "ticks") == 0) {
-                printk("%d\n", ticks);
+                printk("%d\n", get_pit_ticks());
             }
-            else if (strcmp(buffer, "rtc") == 0) {
-                read_rtc();
-                printk("%d/%d/%d %d:%d:%d\n", day, month, year, hour, minute, second);
+            else if (strcmp(buffer, "time") == 0) {
+                t_rtc_time rtc_time = get_rtc_time();
+
+                printk("%02d/%02d/%04d %02d:%02d:%02d\n", rtc_time.day, rtc_time.month, rtc_time.year, rtc_time.hour, rtc_time.minute, rtc_time.second);
             }
             else {
-                // char cmd[32];
-                // char opt1[32];
-                // char opt2[32];
-                // strsplit(buffer, 3, 32, cmd, opt1, opt2);
-                // printk("%s, %s, %s\n", cmd, opt1, opt2);
-                printk("%s\n", buffer);
+                printk("%09s\n", buffer);
             }
         }
     }

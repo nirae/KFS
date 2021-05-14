@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sleep.c                                            :+:      :+:    :+:   */
+/*   pit.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 10:52:04 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/04/12 09:42:38 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/05/13 12:19:16 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/05/14 16:22:55 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libk.h"
+#ifndef PIT_H
+# define PIT_H
 
-void sleep(int time)
-{
-    while (1) {
-        if (time < 0)
-            return;
-        asm volatile("nop");
-        time--;
-    }
-}
+#include "kfs.h"
+
+void init_pit(uint32 hz);
+uint32 get_pit_ticks(void);
+
+#endif

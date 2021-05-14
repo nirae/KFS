@@ -21,6 +21,6 @@ unsigned int	strlen(const char *s);
 char	        *strrev(char *str);
 void	        *memset(void *b, int c, unsigned int len);
 void            hex_to_str(unsigned int addr, char *result, int size);
-void            sleep(int time);
+int		        atoi(const char *str);
 
 #endif
