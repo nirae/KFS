@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:03:49 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:17:11 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@
 #include "debug.h"
 #include "pit.h"
 #include "rtc.h"
+
+void    print_current_time(void)
+{
+    t_rtc_time rtc_time = get_rtc_time();
+    printk(
+        "%02d/%02d/%04d %02d:%02d:%02d", \
+        rtc_time.day, \
+        rtc_time.month, \
+        rtc_time.year, \
+        rtc_time.hour, \
+        rtc_time.minute, \
+        rtc_time.second \
+    );
+}
 
 void    kfs(void)
 {
@@ -38,20 +52,6 @@ void    kfs(void)
     kputstr("\n\n", WHITE);
     print_current_time();
     kputchar('\n', WHITE);
-}
-
-void    print_current_time(void)
-{
-    t_rtc_time rtc_time = get_rtc_time();
-    printk(
-        "%02d/%02d/%04d %02d:%02d:%02d", \
-        rtc_time.day, \
-        rtc_time.month, \
-        rtc_time.year, \
-        rtc_time.hour, \
-        rtc_time.minute, \
-        rtc_time.second \
-    );
 }
 
 void    main(uint32 *magic)

@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 11:37:39 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/11 16:12:52 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:24:37 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void init_gdt()
     gdt_ptr->base = ((uint32)(&gdt_entries));
 
     set_gdt_entry_value(0, 0, 0, 0, 0);                // Null segment
-    set_gdt_entry_value(1, 0, 0xFFFFFFFF, GDT_CODE_PL0, 0xCF); // Kernel code
-    set_gdt_entry_value(2, 0, 0xFFFFFFFF, GDT_DATA_PL0, 0xCF); // Kernel data
-    set_gdt_entry_value(3, 0, 0xFFFFFFFF, GDT_STACK_PL0, 0xCF); // Kernel stack
+    set_gdt_entry_value(1, 0, 0xFFFFFFFF, (uint8)GDT_CODE_PL0, 0xCF); // Kernel code
+    set_gdt_entry_value(2, 0, 0xFFFFFFFF, (uint8)GDT_DATA_PL0, 0xCF); // Kernel data
+    set_gdt_entry_value(3, 0, 0xFFFFFFFF, (uint8)GDT_STACK_PL0, 0xCF); // Kernel stack
 
-    set_gdt_entry_value(4, 0, 0xFFFFFFFF, GDT_CODE_PL3, 0xCF); // User code
-    set_gdt_entry_value(5, 0, 0xFFFFFFFF, GDT_DATA_PL3, 0xCF); // User data
-    set_gdt_entry_value(6, 0, 0xFFFFFFFF, GDT_STACK_PL3, 0xCF); // User stack
+    set_gdt_entry_value(4, 0, 0xFFFFFFFF, (uint8)GDT_CODE_PL3, 0xCF); // User code
+    set_gdt_entry_value(5, 0, 0xFFFFFFFF, (uint8)GDT_DATA_PL3, 0xCF); // User data
+    set_gdt_entry_value(6, 0, 0xFFFFFFFF, (uint8)GDT_STACK_PL3, 0xCF); // User stack
 
     gdt_flush(((uint32)(gdt_ptr)));
 }

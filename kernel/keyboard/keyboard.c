@@ -6,11 +6,12 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:25:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 11:53:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:35:50 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
+#include "interrupts.h"
 
 /*
  *  Keystatus:
@@ -119,7 +120,7 @@ static char qwerty_kb_table[128] = {
 static char qwerty_shift_kb_table[] = {
 	0, 0, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '\b', 0,
     'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n', 0, 'A',
-    'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '\"', '~', 0, '\|', 'Z', 'X',
+    'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '\"', '~', 0, '|', 'Z', 'X',
     'C', 'V', 'B', 'N', 'M', '<', '>', '?', 0, '*', 0, ' ', 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, '7', '8', '9', '-', '4', '5', '6', '+', '1', '2', '3',
 	'0', '.', '6', 0, 0, 0, 0, 0
@@ -149,7 +150,8 @@ uint16 keyboard_handler(void)
         else {
             /* Reset the Keyboard data area */
             outb(KEYBOARD_DATA_PORT, 0);
-            if (keycode < 0 || keycode > 128)
+            /* Between 0 (uint16) and 128 */
+            if (keycode > 128)
                 continue;
             /* Special keys cases */
             switch (qwerty_kb_table[keycode]) {
@@ -184,10 +186,11 @@ char get_pressed_char(void)
     return qwerty_kb_table[keycode];
 }
 
-#include "interrupts.h"
-
-void init_keyboard(void)
-{
-    printk("init keyboard\n");
-    register_interrupt_handler(IRQ1, &keyboard_handler);
-} 
+/*
+ * For after
+ *
+ * void init_keyboard(void)
+ * {
+ *     register_interrupt_handler(IRQ1, &keyboard_handler);
+ * }
+ */

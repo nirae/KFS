@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 12:24:20 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 16:23:00 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:12:32 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ uint32 ticks = 0;
 
 static void pit_handler(t_registers regs)
 {
+    /* Unused parameter */
+    (void)regs;
     ticks++;
 }
 

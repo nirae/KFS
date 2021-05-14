@@ -6,12 +6,13 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:21:35 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 15:11:43 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:18:43 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "idt.h"
 #include "interrupts.h"
+#include "libk.h"
 
 t_idt_entry idt_entries[256];
 t_idt_ptr   idt_ptr;

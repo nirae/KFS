@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 16:17:22 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:31:23 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static void move_left_buffer(char *buffer, int size, int index)
 
 }
 
-void get_input(char *buffer, int buffer_limit)
+void get_input(char *buffer, unsigned int buffer_limit)
 {
-    char        key = 0;
-    int         i = 0;
+    char                key = 0;
+    unsigned int        i = 0;
 
     while (1) {
         key = get_pressed_char();
@@ -101,72 +101,70 @@ void get_input(char *buffer, int buffer_limit)
     }
 }
 
-void strsplit(char *str, int limit, int max, ...)
-{
-    int *args;
-    char *input;
-    char *buffer;
-    int lim = 0;
-    int i;
-    int y;
+// void strsplit(char *str, int limit, int max, ...)
+// {
+//     int *args;
+//     char *input;
+//     int lim = 0;
+//     int i;
+//     int y;
 
-    args = (int *)(&str);
-    input = (char *)(*args++);
-    lim = *args++;
-    max = *args++;
-    i = 0;
-    /* While the tokens limit */
-    while (lim) {
-        memset(*args, 0, max);
-        y = 0;
-        while (input[i]) {
-            if (y > max) {
-                return;
-            }
-            if (input[i] != ' ') {
-                (*((char **)args))[y] = input[i];
-                y++;
-            }
-            else {
-                while (input[i] == ' ')
-                    i++;
-                break;
-            }
-            i++;
-        }
-        args++;
-        lim--;
-    }
-}
+//     args = (int *)(&str);
+//     input = (char *)(*args++);
+//     lim = *args++;
+//     max = *args++;
+//     i = 0;
+//     /* While the tokens limit */
+//     while (lim) {
+//         memset(((void *)(*args)), 0, max);
+//         y = 0;
+//         while (input[i]) {
+//             if (y > max) {
+//                 return;
+//             }
+//             if (input[i] != ' ') {
+//                 (*((char **)args))[y] = input[i];
+//                 y++;
+//             }
+//             else {
+//                 while (input[i] == ' ')
+//                     i++;
+//                 break;
+//             }
+//             i++;
+//         }
+//         args++;
+//         lim--;
+//     }
+// }
 
-int get_next_token(char *buffer, char *result, int size)
-{
-    int i = 0;
-    int y = 0;
+// int get_next_token(char *buffer, char *result, int size)
+// {
+//     int i = 0;
+//     int y = 0;
 
-    memset(result, 0, size);
-    while (buffer[i] == ' ') {
-        i++;
-    }
-    while (buffer[i]) {
-        if (buffer[i] == ' ' || buffer[i] == '\t') {
-            return i;
-        }
-        result[y] = buffer[i];
-        y++;
-        if (y >= size) {
-            return i;
-        }
-        i++;
-    }
-}
+//     memset(result, 0, size);
+//     while (buffer[i] == ' ') {
+//         i++;
+//     }
+//     while (buffer[i]) {
+//         if (buffer[i] == ' ' || buffer[i] == '\t') {
+//             return i;
+//         }
+//         result[y] = buffer[i];
+//         y++;
+//         if (y >= size) {
+//             return i;
+//         }
+//         i++;
+//     }
+// }
 
 void useless_shell(void)
 {
     int     esp;
     int     ebp;
     char    buffer[256];
-    char    cmd[32];
 
     while (666) {
         // kputchar(254, WHITE);

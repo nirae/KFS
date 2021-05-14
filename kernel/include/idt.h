@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:13:28 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 11:53:59 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:16:45 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct __attribute__((packed))  idt_ptr
     uint32 base;                // The address of the first element in our idt_entry_t array.
 }                                       t_idt_ptr;
 
-extern void idt_flush(u32int);
+extern void idt_flush(uint32 idt_ptr);
 
 void init_idt(void);
 

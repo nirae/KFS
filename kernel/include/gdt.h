@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 11:31:31 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/12 19:04:09 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:25:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct  __attribute__((packed)) gdt_ptr
    uint32 base;                // The address of the first gdt_entry_t struct.
 } t_gdt_ptr;
 
-extern void gdt_flush(u32int);
+extern void gdt_flush(uint32 gdt_ptr);
 
 void init_gdt();
 

@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:24:43 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:09:08 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 17:13:39 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ extern char keystatus;
 # define GET_KEYCODE_FROM_RELEASED(keycode) keycode ^ 0x80
 
 void init_keyboard(void);
+char get_pressed_char(void);
 
 #endif
