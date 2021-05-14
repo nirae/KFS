@@ -6,17 +6,15 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:21:35 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/13 17:47:10 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 12:01:42 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "idt.h"
-#include "isr.h"
+#include "interrupts.h"
 
 t_idt_entry idt_entries[256];
 t_idt_ptr   idt_ptr;
-
-extern t_isr interrupt_handlers[];
 
 static void idt_set_gate(uint8 num, uint32 base, uint16 sel, uint8 flags)
 {
@@ -37,19 +35,8 @@ void init_idt(void)
 
     memset(&idt_entries, 0, sizeof(t_idt_entry) * 256);
 
-    memset(&interrupt_handlers, 0, sizeof(t_isr)*256);
-
-    // Remap the irq table.
-    outb(0x20, 0x11);
-    outb(0xA0, 0x11);
-    outb(0x21, 0x20);
-    outb(0xA1, 0x28);
-    outb(0x21, 0x04);
-    outb(0xA1, 0x02);
-    outb(0x21, 0x01);
-    outb(0xA1, 0x01);
-    outb(0x21, 0x0);
-    outb(0xA1, 0x0);
+    init_interrupt_handlers();
+    remap_irq_table();
 
     idt_set_gate(0, (uint32)isr0 , 0x08, 0x8E);
     idt_set_gate(1, (uint32)isr1 , 0x08, 0x8E);

@@ -1,5 +1,3 @@
-SRCS+=./kernel/idt/idt.c
-SRCS+=./kernel/idt/isr.c
 SRCS+=./kernel/vga/kput.c
 SRCS+=./kernel/vga/printk.c
 SRCS+=./kernel/vga/cursor.c
@@ -23,3 +21,7 @@ SRCS+=./kernel/libk/hex_to_str.c
 SRCS+=./kernel/libk/strcmp.c
 SRCS+=./kernel/libk/intlen.c
 SRCS+=./kernel/libk/memset.c
+SRCS+=./kernel/interrupts/idt.c
+SRCS+=./kernel/interrupts/interrupts_handlers.c
+SRCS+=./kernel/interrupts/irq.c
+SRCS+=./kernel/interrupts/isr.c

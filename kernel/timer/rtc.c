@@ -6,12 +6,12 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 22:21:04 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/13 22:58:57 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 11:53:19 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "timer.h"
-#include "isr.h"
+#include "interrupts.h"
 
 #define CURRENT_YEAR        2021                            // Change this each year!
  

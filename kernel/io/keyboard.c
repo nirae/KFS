@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:25:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/13 18:20:01 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/05/14 11:53:19 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ char get_pressed_char(void)
     return qwerty_kb_table[keycode];
 }
 
-#include "isr.h"
+#include "interrupts.h"
 
 void init_keyboard(void)
 {
