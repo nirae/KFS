@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:55:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:10:16 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include "debug.h"
 #include "pit.h"
 #include "rtc.h"
+#include "kmem.h"
+#include "heap.h"
 
 void    print_current_time(void)
 {
@@ -65,9 +67,41 @@ void    main(void)
     clear_screen();
     init_gdt();
     init_idt();
+    init_paging();
+
+    // uint32 *ptr = (uint32*)0xA0000000;
+    // uint32 do_page_fault = *ptr;
+
+    // uint32 a = kmalloc(8);
+    // printk("a: %p=%x\n", a, a);
+    // void *a = kmalloc(8);
+    // uint32 b = kmalloc(8);
+    // printk("b: %p=%x\n", b, b);
+    // kfree(a);
+    // kfree(b);
+    // uint32 c = kmalloc(8);
+    // printk("c: %p=%x\n", c, c);
+
+    // void *d = kmalloc(PAGE_SIZE * 2);
+    // printk("d: %p=%x\n", d, d);
+
+    print_kheap_tree();
+    // printk("get smallest hole : %p\n", find_best_hole(kheap, 8, 0));
+    char *teststr = kmalloc(1000);
+    strncpy(teststr, "yo je test le kmalloc", 999);
+    printk("kmalloc: %s\n", teststr);
+    print_kheap_tree();
+    kfree(teststr);
+    printk("apres le free\n");
+    print_kheap_tree();
+    char *teststr2 = kmalloc(1000);
+    strncpy(teststr, "yo je test le kmalloc 2", 999);
+    printk("kmalloc: %s\n", teststr2);
+    print_kheap_tree();
+
     init_pit(100);
     init_rtc();
-    kfs();
+    // kfs();
 
     kputchar('\n', WHITE);
     kdump(esp, ebp - esp);
