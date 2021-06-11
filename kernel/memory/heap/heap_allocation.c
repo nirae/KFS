@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 10:38:02 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 16:31:41 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:12:57 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void *heap_allocation(uint32 size, uint8 page_align, t_heap *heap)
 
     /* Fill the new block */
     founded_hole = new_header(founded_hole, complete_size, BLOCK);
-    // founded_hole->size = complete_size;
-    // founded_hole->type = BLOCK;
     new_footer(founded_hole);
     btree_insert(&heap->index, 0, founded_hole, &t_header_size_compare);
 

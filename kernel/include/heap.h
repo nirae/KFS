@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:54:54 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 19:09:41 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:14:27 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define HEAP_H
 
 #include "kfs.h"
-#include "ordered_array.h"
 #include "btree.h"
 
 #define KHEAP_START         0xC0000000

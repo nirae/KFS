@@ -6,7 +6,6 @@ HFILES+=./kernel/include/io.h
 HFILES+=./kernel/include/interrupts.h
 HFILES+=./kernel/include/heap.h
 HFILES+=./kernel/include/btree.h
-HFILES+=./kernel/include/ordered_array.h
 HFILES+=./kernel/include/gdt.h
 HFILES+=./kernel/include/pit.h
 HFILES+=./kernel/include/multiboot.h

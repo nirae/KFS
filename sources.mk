@@ -24,7 +24,6 @@ SRCS+=./kernel/memory/heap/decrease_heap.c
 SRCS+=./kernel/memory/heap/t_header.c
 SRCS+=./kernel/memory/heap/create_heap.c
 SRCS+=./kernel/memory/kheap.c
-SRCS+=./kernel/memory/ordered_array.c
 SRCS+=./kernel/kfs.c
 SRCS+=./kernel/gdt/gdt.c
 SRCS+=./kernel/libk/strncpy.c
