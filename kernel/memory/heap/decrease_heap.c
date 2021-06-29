@@ -6,11 +6,12 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 09:54:07 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 09:54:35 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 14:48:41 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heap.h"
+#include "panic.h"
 
 extern t_mempage_directory *kernel_directory;
 
@@ -23,8 +24,7 @@ uint32 decrease_heap(t_heap *heap, uint32 new_size)
 
     /* if the new size is more than old */
     if (new_size > (heap->end_address - heap->start_address)) {
-        printk("PANIC %s:%d\n", __FILE__, __LINE__);
-        while (1) {};
+        KPANIC("Try to decrease the heap with a bigger size than old")
     }
     if (!IS_PAGE_ALIGNED(new_size)) {
         ALIGN_WITH_PAGE(new_size);

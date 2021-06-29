@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 09:55:11 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 10:02:38 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 13:00:45 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ static void debug_tree_func(t_header *header)
 
 void debug_heap_tree(t_heap *heap)
 {
-    // header_btree_apply_prefix(heap->index, &debug_tree_func);
     btree_apply_prefix(heap->index, &debug_tree_func);
 }

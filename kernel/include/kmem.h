@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 17:58:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/09 11:53:54 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 12:25:18 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define KMEM_H
 
 #include "kfs.h"
+
+#define KHEAP_START         0xC0000000
+#define KHEAP_INITIAL_SIZE  0x100000
+#define KHEAP_MAX           0xCFFFF000
 
 /* 16MB */
 #define PHYS_MEM_SIZE 0x1000000
@@ -97,6 +101,8 @@ void init_frames(void);
 uint32 kmalloc(uint32 sz);
 uint32 kmalloc_a(uint32 sz);
 uint32 kmalloc_ap(uint32 sz, uint32 *phys);
+uint32 kget_size(void *p);
+void kfree(void *p);
 void alloc_frame(t_mempage *page, int is_kernel, int is_writeable);
 t_mempage *get_page(uint32 address, t_mempage_directory *dir);
 t_mempage *create_page(uint32 address, t_mempage_directory *dir);

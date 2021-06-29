@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 13:54:54 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 19:14:27 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 11:54:04 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 #include "kfs.h"
 #include "btree.h"
 
-#define KHEAP_START         0xC0000000
-#define KHEAP_INITIAL_SIZE  0x100000
-
-#define HEAP_INDEX_SIZE     0x20000
 #define HEAP_MAGIC          0x123890AB
 #define HEAP_MIN_SIZE       0x70000
 
@@ -27,6 +23,7 @@
 #define HOLE                1
 
 #define NO_HOLE_FOUND       -1
+#define NO_BLOCK_FOUND       -1
 
 typedef struct      header
 {
@@ -66,6 +63,8 @@ t_heap      *create_heap(uint32 start, uint32 end, uint32 max, uint8 supervisor,
     uint8 readonly);
 /* memory/heap/find_best_hole.c */
 t_header    *find_best_hole(t_heap *heap, uint32 size, uint8 align);
+/* memory/heap/find_block_by_address.c */
+t_header *find_block_by_address(t_heap *heap, uint32 address);
 /* memory/heap/heap_allocation.c */
 void        *heap_allocation(uint32 size, uint8 page_align, t_heap *heap);
 /* memory/heap/heap_deallocation.c */

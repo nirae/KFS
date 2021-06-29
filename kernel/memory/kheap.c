@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 11:06:30 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 19:12:26 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 13:20:33 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static uint32 internal_kmalloc(uint32 size, uint8 align, uint32 *phys)
     }
     /* else -> physical allocation */
     else {
-        // if (align == 1 && (placement_address & 0x00000FFF) )
         if (align == 1 && !IS_PAGE_ALIGNED(placement_address)) {
             ALIGN_WITH_PAGE(placement_address);
         }
@@ -57,6 +56,7 @@ void kfree(void *p)
 {
     heap_deallocation(p, kheap);
 }
+
 /*
  *  Allocation with page alignement
  */
@@ -84,6 +84,16 @@ uint32 kmalloc_ap(uint32 size, uint32 *phys)
 uint32 kmalloc(uint32 size)
 {
     return internal_kmalloc(size, 0, 0);
+}
+
+uint32 kget_size(void *p)
+{
+    t_header *block = 0;
+    
+    block = find_block_by_address(kheap, p);
+    if (block == NO_BLOCK_FOUND)
+        return NO_BLOCK_FOUND;
+    return block->size;
 }
 
 void print_kheap_tree(void)

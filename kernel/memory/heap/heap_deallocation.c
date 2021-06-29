@@ -6,11 +6,12 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 10:39:49 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 19:14:39 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 13:07:41 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heap.h"
+#include "panic.h"
 
 /*
     Releases a block allocated with 'heap_allocation'.
@@ -25,8 +26,7 @@ void heap_deallocation(void *p, t_heap *heap)
     t_footer *footer = (t_footer*)((uint32)header + header->size - sizeof(t_footer));
 
     if ((header->magic != HEAP_MAGIC) || (footer->magic != HEAP_MAGIC)) {
-        printk("PANIC magic =%x, %s:%s\n", header->magic, __FILE__, __LINE__);
-        while (1) {};
+        KPANIC("no header or footer found for deallocation");
     }
     /* The block is now a hole */
     header->type = HOLE;

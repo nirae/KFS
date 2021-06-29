@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 19:10:16 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/29 16:42:24 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "rtc.h"
 #include "kmem.h"
 #include "heap.h"
+#include "panic.h"
 
 void    print_current_time(void)
 {
@@ -69,39 +70,26 @@ void    main(void)
     init_idt();
     init_paging();
 
+    /* Test page faulting */
     // uint32 *ptr = (uint32*)0xA0000000;
     // uint32 do_page_fault = *ptr;
 
-    // uint32 a = kmalloc(8);
-    // printk("a: %p=%x\n", a, a);
-    // void *a = kmalloc(8);
-    // uint32 b = kmalloc(8);
-    // printk("b: %p=%x\n", b, b);
-    // kfree(a);
-    // kfree(b);
-    // uint32 c = kmalloc(8);
-    // printk("c: %p=%x\n", c, c);
+    kfs();
 
-    // void *d = kmalloc(PAGE_SIZE * 2);
-    // printk("d: %p=%x\n", d, d);
-
-    print_kheap_tree();
-    // printk("get smallest hole : %p\n", find_best_hole(kheap, 8, 0));
     char *teststr = kmalloc(1000);
     strncpy(teststr, "yo je test le kmalloc", 999);
-    printk("kmalloc: %s\n", teststr);
+    printk("kmalloc 1000: %s, size: %d\n", teststr, kget_size(teststr));
     print_kheap_tree();
     kfree(teststr);
-    printk("apres le free\n");
+
+    char *teststr2 = kmalloc(10);
+    strncpy(teststr, "test2", 9);
+    printk("kmalloc 10: %s, size: %d\n", teststr2, kget_size(teststr2));
     print_kheap_tree();
-    char *teststr2 = kmalloc(1000);
-    strncpy(teststr, "yo je test le kmalloc 2", 999);
-    printk("kmalloc: %s\n", teststr2);
-    print_kheap_tree();
+    kfree(teststr2);
 
     init_pit(100);
     init_rtc();
-    // kfs();
 
     kputchar('\n', WHITE);
     kdump(esp, ebp - esp);

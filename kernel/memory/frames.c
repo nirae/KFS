@@ -6,12 +6,13 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 17:18:42 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/08 11:09:08 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 12:56:01 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kmem.h"
 #include "kput.h"
+#include "panic.h"
 
 /*
  *  Frames -> Equally sized blocks of physical memory
@@ -50,7 +51,7 @@ static uint32 get_first_free_frame(void)
    uint32 j = 0;
 
    for (i = 0; i < BITMAP_INDEX(nframes); i++) {
-        /* if no available space */
+        /* No available space */
         if (frames[i] == 0xFFFFFFFF) {
             continue;
         }
@@ -70,26 +71,23 @@ void init_frames(void)
     memset(frames, 0, BITMAP_INDEX(nframes));
 }
 
-void alloc_frame(t_mempage *page, int is_kernel, int is_writeable)
+void alloc_frame(t_mempage *page, int kmode, int write)
 {
     uint32 free_frame = 0;
 
-    /* if already allocated */
+    /* Already allocated */
     if (page->frame != 0) {
         return;
     }
     else {
         free_frame = get_first_free_frame();
         if (free_frame == (uint32)-1) {
-            // PANIC is just a macro that prints a message to the screen then hits an infinite loop.
-            //    PANIC("No free frames!");
-            printk("PANIC no free frames\n");
-            while (1) {};
+            KPANIC("No free frames");
         }
         set_frame(free_frame * 0x1000);
         page->present = 1;
-        page->rw = (is_writeable) ? 1 : 0;
-        page->user = (is_kernel) ? 0 : 1;
+        page->rw = (write) ? 1 : 0;
+        page->user = (kmode) ? 0 : 1;
         page->frame = free_frame;
     }
 }
@@ -98,7 +96,6 @@ void free_frame(t_mempage *page)
 {
     uint32 frame = page->frame;
 
-    /* if the page haven't an allocated frame */
     if (!frame) {
         return;
     }

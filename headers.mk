@@ -1,4 +1,5 @@
 HFILES+=./kernel/include/debug.h
+HFILES+=./kernel/include/panic.h
 HFILES+=./kernel/include/kput.h
 HFILES+=./kernel/include/idt.h
 HFILES+=./kernel/include/keyboard.h

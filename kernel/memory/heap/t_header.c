@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 10:41:38 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/11 12:32:09 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/28 13:05:23 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_header *new_header(void *addr, uint32 size, uint8 type)
     header->parent  = 0;
     header->left    = 0;
     header->right   = 0;
-
-    // new_footer(header);
 
     return header;
 }
@@ -69,5 +67,4 @@ void *remove_header(t_heap *heap, t_header *header)
         btree_insert(&heap->index, 0, ((t_header *)(header->right)), &t_header_size_compare);
         header->right = 0;
     }
-    printk("supprime %p, heap->index: %p\n", header, heap->index);
 }

@@ -18,6 +18,7 @@ SRCS+=./kernel/memory/frames.c
 SRCS+=./kernel/memory/heap/debug_heap.c
 SRCS+=./kernel/memory/heap/heap_deallocation.c
 SRCS+=./kernel/memory/heap/heap_allocation.c
+SRCS+=./kernel/memory/heap/find_block_by_address.c
 SRCS+=./kernel/memory/heap/increase_heap.c
 SRCS+=./kernel/memory/heap/find_best_hole.c
 SRCS+=./kernel/memory/heap/decrease_heap.c
