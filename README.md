@@ -17,6 +17,8 @@ Functionalities:
 - Keyboard management
 - PIT
 - RTC time
+- Memory paging
+- A heap + kernel virtual memory allocator
 
 ![screen](images/screen-kfs-2.png)
 
@@ -65,6 +67,18 @@ Functionalities:
     - [x] more
 
 ![screen](images/screen-kfs-2-2.png)
+
+## KFS-3
+
+### TODO
+
+- Enable memory paging in your Kernel
+- Code a memory structure that handle paging and memory rights
+- Define Kernel and User space
+- Implement a function to create/get memory pages
+- Implement functions to allocate,free and get size of a variable
+- Implement those functions for virtual and physical memory
+- Handle "kernel panics" (Print, stop the kernel)
 
 ## Compile
 
