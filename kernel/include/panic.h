@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   isr.c                                              :+:      :+:    :+:   */
+/*   panic.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/12 18:49:30 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/23 19:32:59 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/06/28 10:08:48 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/06/28 12:12:05 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "interrupts.h"
+#ifndef KPANIC_H
+# define KPANIC_H
+
+#include "kfs.h"
 #include "kput.h"
 
-extern t_interrupt_handler_func_ptr interrupt_handlers[256];
+#define KPANIC(x) printk("[ KFS - KERNEL PANIC at (%s:%d) ] %s\n", __FILE__, __LINE__, x); while (666) {};
 
-// This gets called from our ASM interrupt handler stub.
-void isr_handler(t_registers regs)
-{
-    printk("received interrupt: %d\n", regs.int_no);
-    if (interrupt_handlers[regs.int_no] != 0)
-    {
-        t_interrupt_handler_func_ptr handler = interrupt_handlers[regs.int_no];
-        handler(regs);
-    }
-}
+#define KERR "[ KFS - KERNEL ERROR ] "
+
+#endif

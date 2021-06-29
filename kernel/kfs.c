@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:55:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/29 16:42:24 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 #include "debug.h"
 #include "pit.h"
 #include "rtc.h"
+#include "kmem.h"
+#include "heap.h"
+#include "panic.h"
 
 void    print_current_time(void)
 {
@@ -65,9 +68,28 @@ void    main(void)
     clear_screen();
     init_gdt();
     init_idt();
+    init_paging();
+
+    /* Test page faulting */
+    // uint32 *ptr = (uint32*)0xA0000000;
+    // uint32 do_page_fault = *ptr;
+
+    kfs();
+
+    char *teststr = kmalloc(1000);
+    strncpy(teststr, "yo je test le kmalloc", 999);
+    printk("kmalloc 1000: %s, size: %d\n", teststr, kget_size(teststr));
+    print_kheap_tree();
+    kfree(teststr);
+
+    char *teststr2 = kmalloc(10);
+    strncpy(teststr, "test2", 9);
+    printk("kmalloc 10: %s, size: %d\n", teststr2, kget_size(teststr2));
+    print_kheap_tree();
+    kfree(teststr2);
+
     init_pit(100);
     init_rtc();
-    kfs();
 
     kputchar('\n', WHITE);
     kdump(esp, ebp - esp);
