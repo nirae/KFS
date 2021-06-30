@@ -6,12 +6,11 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 17:18:42 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/28 12:56:01 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/06/30 11:11:14 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kmem.h"
-#include "kput.h"
 #include "panic.h"
 
 /*
@@ -26,7 +25,7 @@ uint32 nframes;
  */
 static void set_frame(uint32 addr)
 {
-    frames[BITMAP_INDEX(addr / 0x1000)] |= (0x1 << BITMAP_OFFSET(addr / 0x1000));
+    frames[BITMAP_INDEX(addr / PAGE_SIZE)] |= (0x1 << BITMAP_OFFSET(addr / PAGE_SIZE));
 }
 
 /*
@@ -34,7 +33,7 @@ static void set_frame(uint32 addr)
  */
 static void unset_frame(uint32 addr)
 {
-    frames[BITMAP_INDEX(addr / 0x1000)] &= ~(0x1 << BITMAP_OFFSET(addr / 0x1000));
+    frames[BITMAP_INDEX(addr / PAGE_SIZE)] &= ~(0x1 << BITMAP_OFFSET(addr / PAGE_SIZE));
 }
 
 /*
@@ -42,7 +41,7 @@ static void unset_frame(uint32 addr)
  */
 static uint32 test_frame(uint32 addr)
 {
-   return (frames[BITMAP_INDEX(addr / 0x1000)] & (0x1 << BITMAP_OFFSET(addr / 0x1000)));
+   return (frames[BITMAP_INDEX(addr / PAGE_SIZE)] & (0x1 << BITMAP_OFFSET(addr / PAGE_SIZE)));
 }
 
 static uint32 get_first_free_frame(void)
@@ -61,12 +60,12 @@ static uint32 get_first_free_frame(void)
             }
         }
    }
-   return 0;
+   return -1;
 }
 
 void init_frames(void)
 {
-    nframes = PHYS_MEM_SIZE / 0x1000;
+    nframes = PHYS_MEM_SIZE / PAGE_SIZE;
     frames = (uint32 *)kmalloc(BITMAP_INDEX(nframes));
     memset(frames, 0, BITMAP_INDEX(nframes));
 }
@@ -84,7 +83,7 @@ void alloc_frame(t_mempage *page, int kmode, int write)
         if (free_frame == (uint32)-1) {
             KPANIC("No free frames");
         }
-        set_frame(free_frame * 0x1000);
+        set_frame(free_frame * PAGE_SIZE);
         page->present = 1;
         page->rw = (write) ? 1 : 0;
         page->user = (kmode) ? 0 : 1;
