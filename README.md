@@ -1,6 +1,6 @@
 # KFS
 
-Current 42 project : **KFS-3**
+Current 42 project : **KFS-4**
 
 ![Build](https://github.com/nirae/KFS/workflows/build/badge.svg)
 
@@ -79,6 +79,25 @@ Functionalities:
 - Implement functions to allocate,free and get size of a variable
 - Implement those functions for virtual and physical memory
 - Handle "kernel panics" (Print, stop the kernel)
+
+## KFS-4
+
+### TODO
+
+- Create an Interrupts Descriptor Table
+- A signal-callback system on your Kernel API
+- An interface to schedule signals
+- An interface to clean registers before a panic / halt
+- An interface to save the stack before a panic
+- Implement a IDT keyboard handling system
+
+
+**Bonus**
+
+- [] Coding the base functions for the futures syscalls
+- Add some features to the keyboard handler, for example :
+    - [] multi layouts (qwerty, azerty)
+    - [] base functions like get_line
 
 ## Compile
 
