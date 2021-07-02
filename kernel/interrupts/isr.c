@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:49:30 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 17:14:07 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 17:52:10 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 extern t_interrupt_handler_func_ptr interrupt_handlers[256];
 
-// This gets called from our ASM interrupt handler stub.
+/* https://wiki.osdev.org/Exceptions */
 void isr_handler(t_registers regs)
 {
     if (interrupt_handlers[regs.int_no] != 0)

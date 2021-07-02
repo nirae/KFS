@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 17:22:18 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 17:41:41 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 17:57:01 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ void syscall_handler(t_registers *regs)
 
     printk("syscall number %d called\n", regs->eax);
 
-   // We don't know how many parameters the function wants, so we just
-   // push them all onto the stack in the correct order. The function will
-   // use all the parameters it wants, and we can pop them all back off afterwards.
+    /* Push all parameters */
     asm volatile (" \
         push %1; \
         push %2; \
