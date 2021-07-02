@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 19:24:43 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:13:39 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 12:08:53 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ extern char keystatus;
 # define CAPSLOCK_BIT           3
 
 /*
+ *  Layout options
+ */
+# define QWERTY                 1
+# define AZERTY                 2
+
+/*
  *  Macros to update/get the status of a key
  */
 # define SET_KEY_STATUS(status, key) status ^= (-1 ^ status) & (1 << key)
@@ -51,6 +57,9 @@ extern char keystatus;
 # define GET_KEYCODE_FROM_RELEASED(keycode) keycode ^ 0x80
 
 void init_keyboard(void);
-char get_pressed_char(void);
+char read_last_typed_char(void);
+void change_layout(int layout);
+void switch_layout(void);
+int get_layout(void);
 
 #endif
