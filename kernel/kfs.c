@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/01 18:37:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 17:45:19 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "heap.h"
 #include "panic.h"
 #include "keyboard.h"
+#include "syscall.h"
 
 void    print_current_time(void)
 {
@@ -60,12 +61,6 @@ void    kfs(void)
 
 void    main(void)
 {
-    // uint32 esp;
-    // uint32 ebp;
-    // GET_ESP(esp);
-    // GET_EBP(ebp);
-    // char test[34] = "Je test la stack de mon kernel lol";
-
     clear_screen();
     init_gdt();
     init_idt();
@@ -77,10 +72,11 @@ void    main(void)
     init_rtc();
 
     init_keyboard();
+    // init_syscalls();
 
-    // kputchar('\n', WHITE);
-    // kdump(esp, ebp - esp);
-    // kputchar('\n', WHITE);
+    // int testi = 2 / 0;
+    // asm volatile ("int $0x3");
+    // asm volatile ("int $0x4"); 
 
     useless_shell();
     return;

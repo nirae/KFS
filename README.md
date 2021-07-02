@@ -96,8 +96,8 @@ Functionalities:
 
 - [] Coding the base functions for the futures syscalls
 - Add some features to the keyboard handler, for example :
-    - [] multi layouts (qwerty, azerty)
-    - [] base functions like get_line
+    - [x] multi layouts (qwerty, azerty)
+    - [x] base functions like get_line
 
 ## Compile
 

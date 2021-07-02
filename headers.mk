@@ -2,6 +2,7 @@ HFILES+=./kernel/include/debug.h
 HFILES+=./kernel/include/panic.h
 HFILES+=./kernel/include/kput.h
 HFILES+=./kernel/include/idt.h
+HFILES+=./kernel/include/syscall.h
 HFILES+=./kernel/include/keyboard.h
 HFILES+=./kernel/include/io.h
 HFILES+=./kernel/include/interrupts.h

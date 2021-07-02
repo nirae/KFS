@@ -6,11 +6,13 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 12:11:12 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 17:44:50 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "useless_shell.h"
+#include "panic.h"
+#include "syscall.h"
 
 /*
  *  shift the buffer to the right
@@ -145,6 +147,12 @@ void useless_shell(void)
                 else if (get_layout() == AZERTY)
                     printk("azerty\n");
             }
+            else if (strcmp(buffer, "panic") == 0) {
+                KPANIC_DUMP("asked panic");
+            }
+            // else if (strcmp(buffer, "syscall") == 0) {
+            //     test_syscall();
+            // }
             else {
                 printk("%09s\n", buffer);
             }
