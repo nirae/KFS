@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:49:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 17:18:25 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 13:59:31 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libk.h"
 
 t_interrupt_handler_func_ptr interrupt_handlers[256];
-// t_interrupt_handler_func_ptr interrupt_handlers[16];
 
 void init_interrupt_handlers(void)
 {

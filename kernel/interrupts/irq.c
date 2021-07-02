@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:32:06 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 12:02:55 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/07/02 17:53:37 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ void remap_irq_table(void)
     outb(0xA1, 0x0);
 }
 
-// This gets called from our ASM interrupt handler stub.
 void irq_handler(t_registers regs)
 {
-    // Send an EOI (end of interrupt) signal to the PICs.
-    // If this interrupt involved the slave.
+    /* Send EOI (end of interrupt) signal to the PICs */
     if (regs.int_no >= 40)
     {
-        // Send reset signal to slave.
+        /* reset signal to slave */
         outb(0xA0, 0x20);
     }
-    // Send reset signal to master. (As well as slave, if necessary).
+    /* reset signal to master */
     outb(0x20, 0x20);
 
     if (get_interrupt_handler(regs.int_no) != 0)

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   qemu_shutdown.c                                    :+:      :+:    :+:   */
+/*   syscall.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 12:21:06 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 16:17:56 by ndubouil         ###   ########.fr       */
+/*   Created: 2021/07/02 17:21:41 by ndubouil          #+#    #+#             */
+/*   Updated: 2021/07/02 17:36:04 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "io.h"
-#include "panic.h"
+#ifndef SYSCALL_H
+# define SYSCALL_H
 
-/*
- *  https://wiki.osdev.org/Shutdown
- */
-void qemu_shutdown(void)
-{
-    CLEAN_REGISTERS();
-    outw(0x604, 0x2000);
-}
+#include "kfs.h"
+#include "libk.h"
+#include "interrupts.h"
+
+int test_syscall(void);
+void init_syscalls(void);
+
+#endif

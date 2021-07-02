@@ -1,3 +1,4 @@
+SRCS+=./kernel/syscalls/syscalls.c
 SRCS+=./kernel/time/rtc.c
 SRCS+=./kernel/time/pit.c
 SRCS+=./kernel/shell/useless_shell.c
