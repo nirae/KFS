@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:08:58 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/28 16:55:29 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/24 12:13:15 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "kput.h"
 #include "heap.h"
 #include "panic.h"
+#include "debug.h"
 
 extern t_heap *kheap;
 
@@ -79,17 +80,109 @@ t_mempage *get_page(uint32 address, t_mempage_directory *dir)
         return &dir->tables[table_idx]->pages[address%1024];
     }
     return 0;
+}
+
+static t_mempage_table *clone_table(t_mempage_table *src, uint32 *physAddr)
+{
+    // Make a new page table, which is page aligned.
+    uint32 phys;
+    t_mempage_table *table = (t_mempage_table*)kmalloc_ap(sizeof(t_mempage_table), &phys);
+    *physAddr = phys;
+    // Ensure that the new table is blank.
+    memset(table, 0, sizeof(t_mempage_table));
+
+    // For every entry in the table...
+    int i;
+    for (i = 0; i < 1024; i++)
+    {
+        // If the source entry has a frame associated with it...
+        if (src->pages[i].frame)
+        {
+            // Get a new frame.
+            alloc_frame(&table->pages[i], 0, 0);
+            // Clone the flags from source to destination.
+            // TODO memcpy
+            if (src->pages[i].present) table->pages[i].present = 1;
+            if (src->pages[i].rw) table->pages[i].rw = 1;
+            if (src->pages[i].user) table->pages[i].user = 1;
+            if (src->pages[i].accessed) table->pages[i].accessed = 1;
+            if (src->pages[i].dirty) table->pages[i].dirty = 1;
+            // Physically copy the data across. This function is in process.s.
+            // memcpy(&(table->pages[i]), &(src->pages[i]), sizeof(t_mempage));
+            copy_page_physical(src->pages[i].frame*0x1000, table->pages[i].frame*0x1000);
+        }
+    }
+    return table;
+}
+
+t_mempage_directory *clone_directory(t_mempage_directory *src)
+{
+    uint32 phys;
+    t_mempage_directory *dir;
+
+    // Make a new page directory and obtain its physical address.
+    dir = kmalloc_ap(sizeof(t_mempage_directory), &phys);
+    // Ensure that it is blank.
+    memset(dir, 0, sizeof(t_mempage_directory));
+    // Get the offset of tablesPhysical from the start of the page_directory_t structure.
+    // uint32 offset = (uint32)(dir->physical_tables) - (uint32)dir;
+    uint32 offset = (uint32)(dir->physical_tables) - (uint32)dir;
+    // Then the physical address of dir->tablesPhysical is:
+
+    dir->physical_address = phys + offset;
+
+    int i;
+    for (i = 0; i < 1024; i++)
+    {
+        if (!src->tables[i])
+            continue; 
+        if (kernel_directory->tables[i] == src->tables[i])
+        {
+            printk("map the table\n");
+           // It's in the kernel, so just use the same pointer.
+           dir->tables[i] = src->tables[i];
+           dir->physical_tables[i] = src->physical_tables[i];
+        }
+        else
+        {
+            printk("clone the table\n");
+           // Copy the table.
+           uint32 physs;
+           dir->tables[i] = clone_table(src->tables[i], &physs);
+           dir->physical_tables[i] = physs | PAGE_PRESENT | PAGE_RW | PAGE_USER;
+        }
+    }
+    return dir; 
+}
+
+void switch_page_directory(t_mempage_directory *dir)
+{
+    current_directory = dir;
+    // ICI
+    asm volatile("cli; mov %0, %%cr3; sti;":: "r"(dir->physical_address)); // ******** MODIFIED *********
+    uint32 cr0;
+    asm volatile("mov %%cr0, %0": "=r"(cr0));
+    cr0 |= 0x80000000; // Enable paging!
+    asm volatile("mov %0, %%cr0":: "r"(cr0));
+//    asm volatile("cli; mov %0, %%cr0; sti; jmp .;":: "r"(cr0));
 } 
 
 void init_paging()
 {
     int         i = 0;
     t_mempage   *page;
+    t_mempage   *kpage;
 
     init_frames();
     /* Init a page directory */
+    uint32 phys;
     kernel_directory = (t_mempage_directory *)kmalloc_a(sizeof(t_mempage_directory));
+    // kernel_directory = (t_mempage_directory *)kmalloc_ap(sizeof(t_mempage_directory), &phys);
     memset(kernel_directory, 0, sizeof(t_mempage_directory));
+
+    kernel_directory->physical_address = (uint32)kernel_directory->physical_tables;
+    // kernel_directory->physical_address = phys;
+
     current_directory = kernel_directory;
 
     /*
@@ -128,8 +221,9 @@ void init_paging()
 
     register_interrupt_handler(14, page_fault_handler);
     // current_directory = kernel_directory;
-    enable_paging(kernel_directory->physical_tables);
-
+    // enable_paging(kernel_directory->physical_tables);
+    enable_paging(kernel_directory->physical_address);
+    // return;
     /*
      *  Create the kernel heap
      */
@@ -137,4 +231,57 @@ void init_paging()
     if (!kheap) {
         KPANIC("Failed to create the kernel heap");
     }
+    // increase_heap(0x1000000, kheap);
+    // current_directory = clone_directory(kernel_directory);
+    t_mempage_directory *new_directory = clone_directory(kernel_directory);
+    // enable_paging(new_directory->physical_address);
+
+
+    printk("KDIR ! %p\nADDR = %p, PHYS = %p\n", kernel_directory, kernel_directory->physical_address, kernel_directory->physical_tables);
+    printk("NEW ! %p\nADDR = %p, PHYS = %p\n", new_directory, new_directory->physical_address, new_directory->physical_tables);
+    i = 0;
+    while (i < 1024) {
+        if (kernel_directory->tables[i] != 0 && kernel_directory->physical_tables[i] != 0) {
+            if (kernel_directory->tables[i] != new_directory->tables[i]) {
+                printk(
+                    "directory->tables[%d] different !\n[%x] -> [%x]\n",
+                    i,
+                    kernel_directory->tables[i],
+                    new_directory->tables[i]
+                );
+            }
+            if (kernel_directory->physical_tables[i] != new_directory->physical_tables[i]) {
+                printk(
+                    "directory->physical_tables[%d] different !\n[%x] -> [%x]\n",
+                    i,
+                    kernel_directory->physical_tables[i],
+                    new_directory->physical_tables[i]
+                );
+            }
+            printk("table[%d]: %p, phys: %p\n", i, kernel_directory->tables[i], kernel_directory->physical_tables[i]);
+            for (int j = 0; j < 1024; j++) {
+                if (kernel_directory->tables[i]->pages[j].present != new_directory->tables[i]->pages[j].present) {
+                    printk("different !\n");
+                    printk(
+                        "kern_dir p[%d] rw[%d] u[%d] f[%p]\n",
+                        kernel_directory->tables[i]->pages[j].present,
+                        kernel_directory->tables[i]->pages[j].rw,
+                        kernel_directory->tables[i]->pages[j].user,
+                        kernel_directory->tables[i]->pages[j].frame
+                    );
+                    printk(
+                        "new_dir p[%d] rw[%d] u[%d] f[%p]\n",
+                        new_directory->tables[i]->pages[j].present,
+                        new_directory->tables[i]->pages[j].rw,
+                        new_directory->tables[i]->pages[j].user,
+                        new_directory->tables[i]->pages[j].frame
+                    );
+                }          
+            }
+        }
+        i++;
+    }
+
+    current_directory = new_directory;
+    enable_paging(new_directory->physical_address);
 }

@@ -35,5 +35,5 @@ start:
 
 section .bss
     ; resb 8192                     ; stack size : 8KB
-    resb 4096                       ; stack size : 4KB
+    ; resb 4096                       ; stack size : 4KB
 stack_space:

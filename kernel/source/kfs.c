@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 17:45:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/23 15:21:09 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void    main(void)
     init_idt();
     init_paging();
 
-    kfs();
+    // kfs();
 
     init_pit(100);
     init_rtc();

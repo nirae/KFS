@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 11:06:30 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/28 13:20:33 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:19:34 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static uint32 internal_kmalloc(uint32 size, uint8 align, uint32 *phys)
     /* If the Kernel heap exist -> real virtual allocation */
     if (kheap != 0) {
         void *addr = heap_allocation(size, (uint8)align, kheap);
-        if (phys != 0) {
+        if (phys) {
             t_mempage *page = get_page((uint32)addr, kernel_directory);
-            *phys = page->frame*0x1000 + (uint32)addr&0xFFF;
+            *phys = (page->frame * PAGE_SIZE) + ((uint32)addr & 0xfff);
         }
         return (uint32)addr;
     }

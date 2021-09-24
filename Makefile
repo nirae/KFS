@@ -6,7 +6,7 @@
 #    By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 15:17:17 by ndubouil          #+#    #+#              #
-#    Updated: 2021/05/14 17:08:46 by ndubouil         ###   ########.fr        #
+#    Updated: 2021/09/23 20:10:29 by ndubouil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ include headers.mk
 CCYAN=\033[36m
 CEND=\033[0m
 
-CFLAGS = -m32 -nostdlib -nodefaultlibs -fno-builtin -fno-exceptions -fno-stack-protector -Wall -Wextra -g3
+CFLAGS = -m32 -nostdlib -nodefaultlibs -fno-builtin -fno-exceptions -fno-stack-protector -Wall -Wextra -g3 -O0
 CC = /usr/bin/gcc
 LD = /usr/bin/ld
 NASM = /usr/bin/nasm
@@ -89,4 +89,4 @@ drun:
 	qemu-system-i386 -no-reboot -no-shutdown -s -cdrom $(ISO)
 
 run:
-	qemu-system-i386 -s -cdrom $(ISO)
+	qemu-system-i386 -d int -s -cdrom $(ISO)

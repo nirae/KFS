@@ -2,26 +2,26 @@ OUTPUT_FORMAT(elf32-i386)
 ENTRY(start)
 SECTIONS
 {
-    . = 1M;
-    .text BLOCK(4K) : ALIGN(4K)
+    . = 0x100000;
+    .text :
     {
         code = .;
         *(.multiboot)
         *(.text)
+        . = ALIGN(4K);
     }
-    .rodata BLOCK(4K) : ALIGN(4K)
-    {
-        *(.rodata)
-    }
-    .data BLOCK(4K) : ALIGN(4K)
+    .data :
     {
         data = .;
         *(.data)
+        *(.rodata)
+        . = ALIGN(4K);
     }
-    .bss BLOCK(4K) : ALIGN(4K)
+    .bss :
     {
         bss = .;
         *(.bss)
+        . = ALIGN(4K);
     }
     end =.;
 }

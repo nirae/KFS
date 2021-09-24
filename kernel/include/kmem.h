@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 17:58:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/06/28 12:25:18 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/24 12:09:03 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 /* 1 page = 4KB */
 #define PAGE_SIZE 4096
 
-#define IS_PAGE_ALIGNED(x) (!(x & 0x00000FFF))
+// #define IS_PAGE_ALIGNED(x) (!(x & 0x00000FFF))
+#define IS_PAGE_ALIGNED(x) (!(x & 0xFFFFF000))
 #define ALIGN_WITH_PAGE(x) x = ((x & 0xFFFFF000) + PAGE_SIZE)
+// #define ALIGN_WITH_PAGE(x) x = ((x & 0x00000FFF) + PAGE_SIZE)
 
 // Macros used in the bitset algorithms.
 /* Get the index in a bitmap */
@@ -91,6 +93,7 @@ typedef struct      mempage_directory
  *  kernel/arch/i386/enable_paging.asm
  */
 extern void enable_paging(uint32 page_directory);
+// extern copy_page_physical;
 
 /*
  *  memory/frames.c
