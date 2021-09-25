@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 17:58:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/24 12:09:03 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/24 19:43:30 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 // #define IS_PAGE_ALIGNED(x) (!(x & 0x00000FFF))
 #define IS_PAGE_ALIGNED(x) (!(x & 0xFFFFF000))
+// #define ALIGN_WITH_PAGE(x) x = ((x & 0xFFFFF000) + PAGE_SIZE)
 #define ALIGN_WITH_PAGE(x) x = ((x & 0xFFFFF000) + PAGE_SIZE)
 // #define ALIGN_WITH_PAGE(x) x = ((x & 0x00000FFF) + PAGE_SIZE)
 
@@ -111,5 +112,6 @@ t_mempage *get_page(uint32 address, t_mempage_directory *dir);
 t_mempage *create_page(uint32 address, t_mempage_directory *dir);
 void switch_page_directory(t_mempage_directory *dir);
 void init_paging();
+t_mempage_directory *clone_directory(t_mempage_directory *src);
 
 #endif

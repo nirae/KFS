@@ -7,6 +7,7 @@ HFILES+=./kernel/include/keyboard.h
 HFILES+=./kernel/include/io.h
 HFILES+=./kernel/include/interrupts.h
 HFILES+=./kernel/include/heap.h
+HFILES+=./kernel/include/process.h
 HFILES+=./kernel/include/btree.h
 HFILES+=./kernel/include/gdt.h
 HFILES+=./kernel/include/pit.h

@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:08:58 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/24 12:13:15 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/25 18:33:46 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_mempage *create_page(uint32 address, t_mempage_directory *dir)
     table_i = address / 1024;
     dir->tables[table_i] = (t_mempage_table *)kmalloc_ap(sizeof(t_mempage_table), &tmp);
     memset(dir->tables[table_i], 0, PAGE_SIZE);
+    // memset(dir->tables[table_i], 0, sizeof(t_mempage_table));
     dir->physical_tables[table_i] = tmp | PAGE_PRESENT | PAGE_RW | PAGE_USER;
     return &dir->tables[table_i]->pages[address % 1024];
 }
@@ -237,50 +238,50 @@ void init_paging()
     // enable_paging(new_directory->physical_address);
 
 
-    printk("KDIR ! %p\nADDR = %p, PHYS = %p\n", kernel_directory, kernel_directory->physical_address, kernel_directory->physical_tables);
-    printk("NEW ! %p\nADDR = %p, PHYS = %p\n", new_directory, new_directory->physical_address, new_directory->physical_tables);
-    i = 0;
-    while (i < 1024) {
-        if (kernel_directory->tables[i] != 0 && kernel_directory->physical_tables[i] != 0) {
-            if (kernel_directory->tables[i] != new_directory->tables[i]) {
-                printk(
-                    "directory->tables[%d] different !\n[%x] -> [%x]\n",
-                    i,
-                    kernel_directory->tables[i],
-                    new_directory->tables[i]
-                );
-            }
-            if (kernel_directory->physical_tables[i] != new_directory->physical_tables[i]) {
-                printk(
-                    "directory->physical_tables[%d] different !\n[%x] -> [%x]\n",
-                    i,
-                    kernel_directory->physical_tables[i],
-                    new_directory->physical_tables[i]
-                );
-            }
-            printk("table[%d]: %p, phys: %p\n", i, kernel_directory->tables[i], kernel_directory->physical_tables[i]);
-            for (int j = 0; j < 1024; j++) {
-                if (kernel_directory->tables[i]->pages[j].present != new_directory->tables[i]->pages[j].present) {
-                    printk("different !\n");
-                    printk(
-                        "kern_dir p[%d] rw[%d] u[%d] f[%p]\n",
-                        kernel_directory->tables[i]->pages[j].present,
-                        kernel_directory->tables[i]->pages[j].rw,
-                        kernel_directory->tables[i]->pages[j].user,
-                        kernel_directory->tables[i]->pages[j].frame
-                    );
-                    printk(
-                        "new_dir p[%d] rw[%d] u[%d] f[%p]\n",
-                        new_directory->tables[i]->pages[j].present,
-                        new_directory->tables[i]->pages[j].rw,
-                        new_directory->tables[i]->pages[j].user,
-                        new_directory->tables[i]->pages[j].frame
-                    );
-                }          
-            }
-        }
-        i++;
-    }
+    // printk("KDIR ! %p\nADDR = %p, PHYS = %p\n", kernel_directory, kernel_directory->physical_address, kernel_directory->physical_tables);
+    // printk("NEW ! %p\nADDR = %p, PHYS = %p\n", new_directory, new_directory->physical_address, new_directory->physical_tables);
+    // i = 0;
+    // while (i < 1024) {
+    //     if (kernel_directory->tables[i] != 0 && kernel_directory->physical_tables[i] != 0) {
+    //         if (kernel_directory->tables[i] != new_directory->tables[i]) {
+    //             printk(
+    //                 "directory->tables[%d] different !\n[%x] -> [%x]\n",
+    //                 i,
+    //                 kernel_directory->tables[i],
+    //                 new_directory->tables[i]
+    //             );
+    //         }
+    //         if (kernel_directory->physical_tables[i] != new_directory->physical_tables[i]) {
+    //             printk(
+    //                 "directory->physical_tables[%d] different !\n[%x] -> [%x]\n",
+    //                 i,
+    //                 kernel_directory->physical_tables[i],
+    //                 new_directory->physical_tables[i]
+    //             );
+    //         }
+    //         printk("table[%d]: %p, phys: %p\n", i, kernel_directory->tables[i], kernel_directory->physical_tables[i]);
+    //         for (int j = 0; j < 1024; j++) {
+    //             if (kernel_directory->tables[i]->pages[j].present != new_directory->tables[i]->pages[j].present) {
+    //                 printk("different !\n");
+    //                 printk(
+    //                     "kern_dir p[%d] rw[%d] u[%d] f[%p]\n",
+    //                     kernel_directory->tables[i]->pages[j].present,
+    //                     kernel_directory->tables[i]->pages[j].rw,
+    //                     kernel_directory->tables[i]->pages[j].user,
+    //                     kernel_directory->tables[i]->pages[j].frame
+    //                 );
+    //                 printk(
+    //                     "new_dir p[%d] rw[%d] u[%d] f[%p]\n",
+    //                     new_directory->tables[i]->pages[j].present,
+    //                     new_directory->tables[i]->pages[j].rw,
+    //                     new_directory->tables[i]->pages[j].user,
+    //                     new_directory->tables[i]->pages[j].frame
+    //                 );
+    //             }          
+    //         }
+    //     }
+    //     i++;
+    // }
 
     current_directory = new_directory;
     enable_paging(new_directory->physical_address);

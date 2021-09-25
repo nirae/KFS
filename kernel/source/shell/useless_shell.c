@@ -6,13 +6,14 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 17:44:50 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:02:36 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "useless_shell.h"
 #include "panic.h"
 #include "syscall.h"
+#include "process.h"
 
 /*
  *  shift the buffer to the right
@@ -149,6 +150,9 @@ void useless_shell(void)
             }
             else if (strcmp(buffer, "panic") == 0) {
                 KPANIC_DUMP("asked panic");
+            }
+            else if (strcmp(buffer, "pid") == 0) {
+                printk("%d\n", getpid());
             }
             // else if (strcmp(buffer, "syscall") == 0) {
             //     test_syscall();

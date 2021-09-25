@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/23 15:21:09 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/25 19:30:45 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 #include "panic.h"
 #include "keyboard.h"
 #include "syscall.h"
+#include "process.h"
+
+uint32 first_esp = 0;
 
 void    print_current_time(void)
 {
@@ -61,19 +64,34 @@ void    kfs(void)
 
 void    main(void)
 {
-    clear_screen();
+    // GET_ESP(first_esp);
+    // first_esp = boot_esp;
+    // uint32 esp;
+    // GET_ESP(esp);
+    // first_esp = boot_esp;
+    // printk("esp = %x\n", esp);
+    // printk("boot esp = %x\n", boot_esp);
+    // clear_screen();
     init_gdt();
     init_idt();
     init_paging();
-
     // kfs();
 
-    init_pit(100);
+    init_pit(50);
     init_rtc();
 
     init_keyboard();
     // init_syscalls();
 
+    printk("avant le fork !\n");
+    init_processes();
+    // print_kheap_tree();
+
+    // while (1) {
+        int p = fork();
+        printk("fork -> pid %d\n", getpid());
+    // }
+    printk("apres le fork !\n");
     // int testi = 2 / 0;
     // asm volatile ("int $0x3");
     // asm volatile ("int $0x4"); 

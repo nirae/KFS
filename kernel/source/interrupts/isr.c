@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:49:30 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 17:52:10 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/25 19:08:24 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void isr_handler(t_registers regs)
         t_interrupt_handler_func_ptr handler = interrupt_handlers[regs.int_no];
         handler(regs);
     }
+    uint32 faulting_address;
+    /* Get the faulting address in CR2 reg */
+    asm volatile("mov %%cr2, %0" : "=r" (faulting_address));
+    printk("faulting address %p\n", faulting_address);
     switch (regs.int_no) {
     case 0:
         printk(KERR "Division by Zero\n");
