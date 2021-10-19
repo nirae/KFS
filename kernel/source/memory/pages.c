@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:08:58 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/25 18:33:46 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/26 18:00:49 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,18 +155,6 @@ t_mempage_directory *clone_directory(t_mempage_directory *src)
     }
     return dir; 
 }
-
-void switch_page_directory(t_mempage_directory *dir)
-{
-    current_directory = dir;
-    // ICI
-    asm volatile("cli; mov %0, %%cr3; sti;":: "r"(dir->physical_address)); // ******** MODIFIED *********
-    uint32 cr0;
-    asm volatile("mov %%cr0, %0": "=r"(cr0));
-    cr0 |= 0x80000000; // Enable paging!
-    asm volatile("mov %0, %%cr0":: "r"(cr0));
-//    asm volatile("cli; mov %0, %%cr0; sti; jmp .;":: "r"(cr0));
-} 
 
 void init_paging()
 {

@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 17:58:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/24 19:43:30 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/09/26 18:15:29 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define KMEM_H
 
 #include "kfs.h"
+
+#define GET_ESP(x) asm volatile("mov %%esp, %0" : "=r"(x) ::)
+#define GET_EBP(x) asm volatile("mov %%ebp, %0" : "=r"(x) ::)
 
 #define KHEAP_START         0xC0000000
 #define KHEAP_INITIAL_SIZE  0x100000

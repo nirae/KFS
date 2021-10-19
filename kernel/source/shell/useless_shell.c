@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/25 20:02:36 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/19 11:38:19 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,23 @@ void useless_shell(void)
             }
             else if (strcmp(buffer, "pid") == 0) {
                 printk("%d\n", getpid());
+            }
+            else if (strcmp(buffer, "exit") == 0) {
+                return;
+            }
+            else if (strcmp(buffer, "shell") == 0) {
+                int p = fork();
+                disable_interrupts();
+                printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
+                enable_interrupts();
+                if (p == 0) {
+                    printk("spawning new shell !\n");
+                    useless_shell();
+                    exit();
+                } else {
+                    printk("spawning shell parent\n");
+                    // return;
+                }
             }
             // else if (strcmp(buffer, "syscall") == 0) {
             //     test_syscall();

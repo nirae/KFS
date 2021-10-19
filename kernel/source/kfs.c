@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/25 19:30:45 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/19 11:52:26 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,29 @@ void    main(void)
     // print_kheap_tree();
 
     // while (1) {
-        int p = fork();
-        printk("fork -> pid %d\n", getpid());
+    int p = fork();
+    disable_interrupts();
+    printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
+    print_task_list();
+    enable_interrupts();
+    // if (p == 0) {
+        // printk("dans le fils\n");
+        // useless_shell();
+        // exit();
     // }
-    printk("apres le fork !\n");
+    // printk("dans le pere\n");
+        
+    // }
+    // printk("dans le fork !\n");
+    // exit();
+    // printk("apres le exit %d\n", getpid());
+    // char *test = kmalloc(10000);
+        // int pr = fork();
+        // printk("fork -> pid %d\n", getpid());
     // int testi = 2 / 0;
     // asm volatile ("int $0x3");
     // asm volatile ("int $0x4"); 
-
-    useless_shell();
+    while(1) {};
+    // useless_shell();
     return;
 }
