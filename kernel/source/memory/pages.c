@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:08:58 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/26 18:00:49 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 17:51:38 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_mempage *create_page(uint32 address, t_mempage_directory *dir)
     memset(dir->tables[table_i], 0, PAGE_SIZE);
     // memset(dir->tables[table_i], 0, sizeof(t_mempage_table));
     dir->physical_tables[table_i] = tmp | PAGE_PRESENT | PAGE_RW | PAGE_USER;
+    // dir->physical_tables[table_i] = tmp | PAGE_PRESENT | PAGE_RW;
     return &dir->tables[table_i]->pages[address % 1024];
 }
 

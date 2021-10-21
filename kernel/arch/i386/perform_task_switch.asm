@@ -7,5 +7,6 @@ perform_task_switch:
      mov ebp, [esp+12]  ; EBP
      mov esp, [esp+16]  ; ESP
      mov cr3, eax       ; set the page directory
+    ;  mov eax, 0x12345
      sti;
      jmp ecx

@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/19 11:38:19 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:47:17 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void useless_shell(void)
     char    buffer[256];
 
     while (666) {
-        printk("%c> ", 3);
+        printk("%d %c> ", getpid(), 3);
         memset(buffer, 0, 256);
         get_line(buffer, 256);
         if (strlen(buffer) > 0) {
@@ -154,7 +154,11 @@ void useless_shell(void)
             else if (strcmp(buffer, "pid") == 0) {
                 printk("%d\n", getpid());
             }
+            else if (strcmp(buffer, "tasks") == 0) {
+                print_task_list();
+            }
             else if (strcmp(buffer, "exit") == 0) {
+                // exit();
                 return;
             }
             else if (strcmp(buffer, "shell") == 0) {
@@ -162,18 +166,22 @@ void useless_shell(void)
                 disable_interrupts();
                 printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
                 enable_interrupts();
+                // print_task_list();
                 if (p == 0) {
                     printk("spawning new shell !\n");
                     useless_shell();
                     exit();
                 } else {
-                    printk("spawning shell parent\n");
-                    // return;
+                    // printk("spawning shell parent\n");
+                    waitpid(p);
                 }
+                printk("after exit in shell\n");
+                // waitpid(p);
+                    // return;
             }
-            // else if (strcmp(buffer, "syscall") == 0) {
-            //     test_syscall();
-            // }
+            else if (strcmp(buffer, "syscall") == 0) {
+                test_syscall();
+            }
             else {
                 printk("%09s\n", buffer);
             }

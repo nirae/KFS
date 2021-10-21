@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 17:58:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/26 18:15:29 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 18:36:49 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 
 #include "kfs.h"
 
+/* stack size = 8KB */
+#define STACK_SIZE      8192
+#define STACK_LOCATION  0xA0000000
+
 #define GET_ESP(x) asm volatile("mov %%esp, %0" : "=r"(x) ::)
 #define GET_EBP(x) asm volatile("mov %%ebp, %0" : "=r"(x) ::)
+#define SET_ESP(x) asm volatile("mov %0, %%esp" : : "r" (x))
+#define SET_EBP(x) asm volatile("mov %0, %%ebp" : : "r" (x))
 
 #define KHEAP_START         0xC0000000
 #define KHEAP_INITIAL_SIZE  0x100000
 #define KHEAP_MAX           0xCFFFF000
-
 /* 16MB */
 #define PHYS_MEM_SIZE 0x1000000
-
 /* 1 page = 4KB */
 #define PAGE_SIZE 4096
-
 // #define IS_PAGE_ALIGNED(x) (!(x & 0x00000FFF))
 #define IS_PAGE_ALIGNED(x) (!(x & 0xFFFFF000))
 // #define ALIGN_WITH_PAGE(x) x = ((x & 0xFFFFF000) + PAGE_SIZE)

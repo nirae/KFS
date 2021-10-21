@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 12:24:20 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/09/24 16:37:05 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:15:59 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void pit_handler(t_registers regs)
     /* Unused parameter */
     (void)regs;
     ticks++;
-    switch_task();
+    // if (ticks % 2 == 0)
+        switch_task();
 }
 
 uint32 get_pit_ticks(void)
