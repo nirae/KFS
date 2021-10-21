@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:40:23 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 19:30:11 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:31:04 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_process   *create_process(t_mempage_directory *directory)
     new->pid = next_pid;
     next_pid++;
     new->page_directory = directory;
-    new->status = 1;
+    new->status = STATUS_ALIVE;
 
     return new;
 }
@@ -53,7 +53,7 @@ void exit(void)
     disable_interrupts();
 
     t_process *to_remove = current_task;
-    to_remove->status = 0;
+    to_remove->status = STATUS_DEAD;
 
     t_process *tmp_task = (t_process*)ready_queue;
     while (tmp_task) {
@@ -201,7 +201,7 @@ void switch_task()
     // printk("to [%d]\n", current_task->pid);
     // enable_interrupts();
 
-    if (current_task->status == 0) {
+    if (current_task->status == STATUS_DEAD) {
         // enable_interrupts();
         return;
     }
