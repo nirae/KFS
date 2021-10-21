@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:35:20 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 17:58:14 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:53:42 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 #define STATUS_ZOMBIE   2
 #define STATUS_DEAD     0
 
-// typedef struct          task
-// {
-//     struct process      *process;
-//     struct process      *next;
-//     struct process      *prev;
-// }                       t_task;
+typedef struct          task
+{
+    struct process      *process;
+    struct task      *next;
+    struct task      *prev;
+}                       t_task;
 
 // This structure defines a 'task' - a process.
 typedef struct          process
@@ -75,10 +75,10 @@ int getstatus(void);
 void print_task_list(void);
 
 /* Scheduler */
-// void init_scheduler_list(t_process *first_process);
-// void remove_process_to_scheduler(t_process *process);
-// void add_process_to_scheduler(t_process *process);
-// void switch_task(void);
-// t_process *get_current_task_process(void);
+void init_scheduler_list(t_process *first_process);
+void remove_process_to_scheduler(t_process *process);
+void add_process_to_scheduler(t_process *process);
+void switch_task(void);
+t_process *get_current_task_process(void);
 
 #endif

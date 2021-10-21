@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 19:21:39 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:51:27 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void useless_shell(void)
                     waitpid(p);
                 }
                 printk("after exit in shell\n");
+                print_task_list();
                 // waitpid(p);
                     // return;
             }
