@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 17:58:00 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 18:36:49 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:20:14 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /* stack size = 8KB */
 #define STACK_SIZE      8192
-#define STACK_LOCATION  0xA0000000
+#define STACK_LOCATION  0xE0000000
 
 #define GET_ESP(x) asm volatile("mov %%esp, %0" : "=r"(x) ::)
 #define GET_EBP(x) asm volatile("mov %%ebp, %0" : "=r"(x) ::)
