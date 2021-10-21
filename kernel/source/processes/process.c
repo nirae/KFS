@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:40:23 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 19:22:37 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 19:30:11 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ extern uint32 first_esp;
 
 // The next available process ID.
 uint32 next_pid = 1;
+
+t_process   *create_process(t_mempage_directory *directory)
+{
+    t_process *new = (t_process*)kmalloc_a(sizeof(t_process));
+    memset(new, 0, sizeof(t_process));
+    new->pid = next_pid;
+    next_pid++;
+    new->page_directory = directory;
+    new->status = 1;
+
+    return new;
+}
 
 void exit(void)
 {
@@ -89,21 +101,9 @@ int fork(void)
     // Take a pointer to this process' task struct for later reference.
     parent_task = current_task;
 
-    // Clone the address space.
-    // t_mempage_directory *directory = clone_directory(current_directory);
-
     // Create a new process.
-    t_process *new_task = (t_process*)kmalloc_a(sizeof(t_process));
-    new_task->pid = next_pid;
-    next_pid++;
-    new_task->esp = new_task->ebp = 0;
-    new_task->eip = 0;
-    new_task->page_directory = clone_directory(current_directory);
-    new_task->next = 0;
+    t_process *new_task = create_process(clone_directory(current_directory));
     new_task->parent = parent_task;
-    new_task->status = 1;
-    // new_task->childs = 0;
-    // new_task->next_bro = 0;
 
     // Add it to the end of the ready queue.
     t_process *tmp_task = (t_process *)ready_queue;
@@ -258,16 +258,7 @@ void init_processes(void)
     disable_interrupts();
     relocate_stack((void *)STACK_LOCATION, STACK_SIZE);
     // Initialise the first task (kernel task)
-    current_task = ready_queue = (t_process *)kmalloc_a(sizeof(t_process));
-    // ready_queue = current_task;
-    current_task->pid = next_pid++;
-    current_task->esp = 0;
-    current_task->ebp = 0;
-    current_task->eip = 0;
-    current_task->page_directory = current_directory;
-    current_task->next = 0;
-    current_task->prev = 0;
-    current_task->parent = 0;
-    current_task->status = 1;
+    current_task = create_process(current_directory);
+    ready_queue = current_task;
     enable_interrupts();
 }
