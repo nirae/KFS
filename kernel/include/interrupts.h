@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:54:43 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/05/14 14:31:15 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:21:30 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 #include "kfs.h"
 #include "io.h"
+
+#define DISABLE_INTERRUPTS() asm volatile("cli")
+#define ENABLE_INTERRUPTS() asm volatile("sti")
 
 #define IRQ0    32
 #define IRQ1    33
@@ -112,7 +115,7 @@ void remap_irq_table(void);
 void register_interrupt_handler(uint8 n, t_interrupt_handler_func_ptr handler); 
 t_interrupt_handler_func_ptr get_interrupt_handler(uint8 n);
 void init_interrupt_handlers(void);
-void disable_interrupts(void);
-void enable_interrupts(void);
+// void disable_interrupts(void);
+// void enable_interrupts(void);
 
 #endif

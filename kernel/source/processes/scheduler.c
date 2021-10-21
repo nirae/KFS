@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 15:26:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:10:03 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:22:26 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void print_task_list(void)
 
 void switch_task()
 {
-    // disable_interrupts();
+    // DISABLE_INTERRUPTS();
     // If we haven't initialised tasking yet, just return.
     if (!current_task)
         return;
@@ -130,7 +130,7 @@ void switch_task()
     eip = get_eip();
 
     if (future_task->process->pid == current_task->process->pid) {
-        // enable_interrupts();
+        // ENABLE_INTERRUPTS();
         return;
     }
 
@@ -146,7 +146,7 @@ void switch_task()
         current_task = schedule_queue;
 
     if (current_task->process->status == STATUS_DEAD) {
-        // enable_interrupts();
+        // ENABLE_INTERRUPTS();
         return;
     }
 
@@ -154,5 +154,5 @@ void switch_task()
     current_directory = current_task->process->page_directory;
     // printk("switch on %d eip[%p], esp[%p], ebp[%p] dir [%p]\n", current_task->pid, eip, esp, ebp, current_directory->physical_address);
     perform_task_switch(current_task->process->eip, current_directory->physical_address, current_task->process->ebp, current_task->process->esp);
-    // enable_interrupts();
+    // ENABLE_INTERRUPTS();
 }

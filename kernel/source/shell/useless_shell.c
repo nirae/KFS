@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 19:51:27 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:22:26 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,9 @@ void useless_shell(void)
             }
             else if (strcmp(buffer, "shell") == 0) {
                 int p = fork();
-                disable_interrupts();
+                DISABLE_INTERRUPTS();
                 printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
-                enable_interrupts();
+                ENABLE_INTERRUPTS();
                 // print_task_list();
                 if (p == 0) {
                     printk("spawning new shell !\n");

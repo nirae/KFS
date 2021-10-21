@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:40:23 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:12:12 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:22:29 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,20 @@ void exit(void)
     if (get_current_task_process()->parent == 0)
         return;
 
-    disable_interrupts();
+    DISABLE_INTERRUPTS();
     t_process *to_remove = get_current_task_process();
     to_remove->status = STATUS_DEAD;
     remove_process_to_scheduler(to_remove);
     printk("exit !\n");
     switch_task();
-    enable_interrupts();
+    ENABLE_INTERRUPTS();
 }
 
 int fork(void)
 {
     // We are modifying kernel structures, and so cannot
     // TODO macro
-    disable_interrupts();
+    DISABLE_INTERRUPTS();
 
     // Take a pointer to this process' task struct for later reference.
     parent_task = get_current_task_process();
@@ -90,12 +90,12 @@ int fork(void)
         GET_EBP(new_task->ebp);
         new_task->eip = eip;
         switch_task();
-        // enable_interrupts();
+        // ENABLE_INTERRUPTS();
         return new_task->pid;
     }
     else
     {
-        // enable_interrupts();
+        // ENABLE_INTERRUPTS();
         // We are the child.
         return 0;
     }
@@ -119,10 +119,10 @@ void debug_process(t_process *process)
 
 void init_processes(void)
 { 
-    disable_interrupts();
+    DISABLE_INTERRUPTS();
     relocate_stack((void *)STACK_LOCATION, STACK_SIZE);
     // Initialise the first task (kernel task)
     t_process *init = create_process(current_directory);
     init_scheduler_list(init);
-    enable_interrupts();
+    ENABLE_INTERRUPTS();
 }

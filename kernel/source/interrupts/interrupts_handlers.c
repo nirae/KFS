@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 11:49:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/07/02 13:59:31 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:22:06 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void register_interrupt_handler(uint8 n, t_interrupt_handler_func_ptr handler)
     interrupt_handlers[n] = handler;
 } 
 
-void disable_interrupts(void)
-{
-    asm volatile("cli");
-}
+// void DISABLE_INTERRUPTS(void)
+// {
+//     asm volatile("cli");
+// }
 
-void enable_interrupts(void)
-{
-    asm volatile("sti");
-}
+// void enable_interrupts(void)
+// {
+//     asm volatile("sti");
+// }
