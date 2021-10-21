@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:22:26 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:27:44 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void useless_shell(void)
     int     ebp;
     char    buffer[256];
 
+    printk("Welcome on the useless shell, your pid is %d\n", getpid());
     while (666) {
         printk("%d %c> ", getpid(), 3);
         memset(buffer, 0, 256);
@@ -158,27 +159,17 @@ void useless_shell(void)
                 print_task_list();
             }
             else if (strcmp(buffer, "exit") == 0) {
-                // exit();
+                printk("Goodbye!\n");
                 return;
             }
             else if (strcmp(buffer, "shell") == 0) {
                 int p = fork();
-                DISABLE_INTERRUPTS();
-                printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
-                ENABLE_INTERRUPTS();
-                // print_task_list();
                 if (p == 0) {
-                    printk("spawning new shell !\n");
                     useless_shell();
                     exit();
                 } else {
-                    // printk("spawning shell parent\n");
                     waitpid(p);
                 }
-                printk("after exit in shell\n");
-                print_task_list();
-                // waitpid(p);
-                    // return;
             }
             else if (strcmp(buffer, "syscall") == 0) {
                 test_syscall();

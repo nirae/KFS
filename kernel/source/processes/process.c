@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:40:23 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:22:29 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:26:40 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void exit(void)
     t_process *to_remove = get_current_task_process();
     to_remove->status = STATUS_DEAD;
     remove_process_to_scheduler(to_remove);
-    printk("exit !\n");
     switch_task();
     ENABLE_INTERRUPTS();
 }

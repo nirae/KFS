@@ -6,11 +6,12 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:57:55 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:17:48 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:24:29 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kput.h"
+#include "interrupts.h"
 
 void printk(char *str, ...)
 {
@@ -20,8 +21,7 @@ void printk(char *str, ...)
     char    tmp_addr[9];
     uint8   zero_padding;
 
-    
-
+    DISABLE_INTERRUPTS();
     args = (int *)(&str);
     format = (char *)(*args++);
     i = 0;
@@ -71,4 +71,5 @@ void printk(char *str, ...)
         }
         i++;
     }
+    ENABLE_INTERRUPTS();
 }

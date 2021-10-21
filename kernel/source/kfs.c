@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 15:17:27 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:18:17 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:24:52 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ void    main(void)
 
     // while (1) {};
     int p = fork();
-    // printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
+    printk("fork %d -> pid %d -> status %d\n", p, getpid(), getstatus());
     if (p == 0) {
-        // printk("dans le fils p[%d] pid %d\n", p, getpid());
+        printk("dans le fils p[%d] pid %d\n", p, getpid());
         // while(1) {};
         useless_shell();
         exit();
