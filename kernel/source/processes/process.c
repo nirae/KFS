@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:40:23 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:26:40 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:30:00 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,13 @@ int fork(void)
         GET_ESP(new_task->esp);
         GET_EBP(new_task->ebp);
         new_task->eip = eip;
-        switch_task();
-        // ENABLE_INTERRUPTS();
+        ENABLE_INTERRUPTS();
         return new_task->pid;
     }
     else
     {
-        // ENABLE_INTERRUPTS();
         // We are the child.
+        ENABLE_INTERRUPTS();
         return 0;
     }
 
