@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 10:54:26 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 20:27:44 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:33:07 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void useless_shell(void)
 
     printk("Welcome on the useless shell, your pid is %d\n", getpid());
     while (666) {
-        printk("%d %c> ", getpid(), 3);
+        printk("%c> ", 3);
         memset(buffer, 0, 256);
         get_line(buffer, 256);
         if (strlen(buffer) > 0) {
