@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:08:58 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 17:51:38 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:13:44 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,12 @@ t_mempage_directory *clone_directory(t_mempage_directory *src)
             continue; 
         if (kernel_directory->tables[i] == src->tables[i])
         {
-            printk("map the table\n");
            // It's in the kernel, so just use the same pointer.
            dir->tables[i] = src->tables[i];
            dir->physical_tables[i] = src->physical_tables[i];
         }
         else
         {
-            printk("clone the table\n");
            // Copy the table.
            uint32 physs;
            dir->tables[i] = clone_table(src->tables[i], &physs);

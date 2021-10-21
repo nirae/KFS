@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 15:40:23 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 19:58:21 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:12:12 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,6 @@ void exit(void)
     switch_task();
     enable_interrupts();
 }
-
-extern t_task      *schedule_queue;
-
-void waitpid(int pid)
-{
-    t_task *tmp_task = schedule_queue;
-    while (tmp_task) {
-        if (tmp_task->process->pid == pid) {
-            while (tmp_task->process->status == STATUS_ALIVE) {
-            ;    // printk("%d waiting %d\n", getpid(), pid);
-            };
-            return;
-        }
-        tmp_task = tmp_task->next;
-    }
-}
-
 
 int fork(void)
 {

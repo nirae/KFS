@@ -6,7 +6,7 @@
 #    By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 15:17:17 by ndubouil          #+#    #+#              #
-#    Updated: 2021/10/21 18:30:41 by ndubouil         ###   ########.fr        #
+#    Updated: 2021/10/21 20:00:06 by ndubouil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ fclean: clean
 re: fclean all
 
 drun:
-	qemu-system-i386 -no-reboot -no-shutdown -s -cdrom $(ISO)
+	qemu-system-i386 -no-reboot -no-shutdown -d int -s -cdrom $(ISO)
 
 run:
 	qemu-system-i386 -d int -s -cdrom $(ISO)

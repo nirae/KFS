@@ -6,7 +6,7 @@
 /*   By: ndubouil <ndubouil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 15:26:01 by ndubouil          #+#    #+#             */
-/*   Updated: 2021/10/21 19:56:45 by ndubouil         ###   ########.fr       */
+/*   Updated: 2021/10/21 20:10:03 by ndubouil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ int getpid(void)
 int getstatus(void)
 {
     return current_task->process->status;
+}
+
+void waitpid(int pid)
+{
+    t_task *tmp_task = schedule_queue;
+    while (tmp_task) {
+        if (tmp_task->process->pid == pid) {
+            while (tmp_task->process->status == STATUS_ALIVE) {
+            ;    // printk("%d waiting %d\n", getpid(), pid);
+            };
+            return;
+        }
+        tmp_task = tmp_task->next;
+    }
 }
 
 t_task *create_task(t_process *process)
@@ -75,7 +89,6 @@ void remove_process_to_scheduler(t_process *process)
             } else {
                 tmp->next = 0;
             }
-            // kfree(to_remove);
             break;
         }
         tmp = tmp->next;
